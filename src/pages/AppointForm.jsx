@@ -1,7 +1,4 @@
-import {
-  isValidPhoneNumber,
-  formatPhoneNumberIntl,
-} from "react-phone-number-input";
+import { isValidPhoneNumber } from "react-phone-number-input";
 
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
@@ -13,6 +10,7 @@ import Form from "./../components/Form";
 import { emailRegex, urlRegEx } from "./../utils";
 import axios from "axios";
 import { useAppContext } from "../context/context";
+
 function AppointForm({
   geopl,
   chatBotUtils_1,
@@ -34,10 +32,21 @@ function AppointForm({
     setCal_Data,
     setCb_section,
     setnext_ques,
+    mobile,
+    setmobile,
+    fetchCountries,
+    flagsearchValue,
+    setFlagSearchValue,
+    countries,
+    setcountries,
+    setDropDownSelect,
   } = useAppContext();
 
   const navigate = useNavigate();
 
+  useEffect(() => {
+    fetchCountries();
+  }, []);
   const handleChange = (e) => {
     setUserData({ ...userData, [e.target.name]: e.target.value });
   };
@@ -46,7 +55,7 @@ function AppointForm({
   formData_detail_data.append("action", "answer");
   formData_detail_data.append(
     "answer_text",
-    `{"Name":"${userData.name}","Country Code":"${number?.country?.countryCode} +${number?.country?.dialCode}","Phone Number":"${number?.rawPhone}","Business Email":"${userData?.email}","Company Website":"${userData?.companyUrl}"}`
+    `{"Name":"${userData.name}","Country Code":"${number?.isoCode} ${number?.dialCode}","Phone Number":"${mobile}","Business Email":"${userData?.email}","Company Website":"${userData?.companyUrl}"}`
   );
 
   formData_detail_data.append("cb_session", chatBotUtils_1?.cb_session);
@@ -68,10 +77,10 @@ function AppointForm({
           headers: { "Content-Type": "multipart/form-data" },
         });
         setCal_Data(data?.data?.next_question[0]?.default_options);
-        localStorage.setItem(
-          "CalData",
-          data?.data?.next_question[0]?.default_options
-        );
+        // localStorage.setItem(
+        //   "CalData",
+        //   data?.data?.next_question[0]?.default_options
+        // );
         setCb_section(data?.data);
         setnext_ques(data?.data?.next_question[0]);
       } catch (error) {
@@ -140,8 +149,8 @@ function AppointForm({
     e.preventDefault();
     if (userData.name.length >= 3) {
       if (emailRegex.test(userData.email.toLowerCase())) {
-        if (isValidPhoneNumber(`${number?.formattedValue}`)) {
-          if (userData.companyUrl.match(urlRegEx)) {
+        if (isValidPhoneNumber(`${number?.dialCode}${mobile}`)) {
+          if (userData.companyUrl.trim().match(urlRegEx)) {
             if (userData.companyName.length > 3) {
               setLoading(true);
               post_Form_data();
@@ -159,7 +168,7 @@ function AppointForm({
           }
         } else {
           setError("numberErr");
-          setNumber({ ...number, formattedValue: "", value: "" });
+          setmobile("");
         }
       } else {
         setError("emailErr");
@@ -184,28 +193,28 @@ function AppointForm({
     <div className="container">
       <div className="wrapper">
         <div className="left">
-          <p className="m-b-10 text-color-lightblue-1  f-w-600 f-s-14 ">
+          <p className="m-b-10 text-color-lightblue-1  f-w-600 f-s-14  f-s-18">
             SmatBot
           </p>
-          <h2 className="m-b-20 f-s-20 text-light-black">
+          <h2 className="m-b-20 f-s-20 f-s-24 text-light-black">
             Book Demo with SmatBot
           </h2>
           <div className="row m-b-20">
             <img src={stopWatch} alt="stopwatch" width="20px" height="20px" />
-            <p className="text-color-lightblue-1  f-w-600 f-s-14 m-l-20">
+            <p className="text-color-lightblue-1  f-w-600 f-s-14 f-s-18 m-l-20">
               {" "}
               45 Minutes
             </p>
           </div>
           <div className="row m-b-20">
             <img src={videoIcon} alt="videoIcon" width="20px" height="20px" />
-            <p className="text-color-lightblue-1  f-w-600 f-s-14 m-l-20">
+            <p className="text-color-lightblue-1  f-w-600 f-s-14  f-s-18 m-l-20">
               {" "}
               Demo confirmation details will be sent upon confirmation
             </p>
           </div>
-          <p className="m-b-20 text-light-blue f-w-500 f-s-14">Hey!</p>
-          <p className="m-b-20 inline-h-30 text-light-blue f-w-500 f-s-14">
+          <p className="m-b-20 text-light-blue f-w-500 f-s-14 f-s-18">Hey!</p>
+          <p className="m-b-20 inline-h-30 text-light-blue f-w-500 f-s-14 f-s-18">
             We're delighted to see that you are interested in SmatBot. This call
             will help us get to know each other and find ways that SmatBot can
             help your organization.
@@ -213,11 +222,13 @@ function AppointForm({
           <div className="powred-by ">
             <span className="m-l-5">Powred By</span>
             <img src="" alt="" className="m-l-5" />
-            <span className="f-s-12 f-w-600 text-light-black">SmatBot</span>
+            <span className="f-s-10 f-s-14 f-w-600 text-light-black">
+              SmatBot
+            </span>
           </div>
         </div>
         <div className="right">
-          <h5 className="text-blue  m-b-20 f-w-500 f-s-14">
+          <h5 className="text-blue  m-b-20 f-w-500 f-s-14 f-s-18 m-w-85">
             Please share your details so we can customize our demo to match your
             needs.
           </h5>
@@ -232,6 +243,7 @@ function AppointForm({
             urlRegEx={urlRegEx}
             loading={loading}
             setNumber={setNumber}
+            geopl={geopl}
           />
         </div>
       </div>

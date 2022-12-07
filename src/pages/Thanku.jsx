@@ -12,20 +12,60 @@ import Confetti from "react-confetti";
 import { useAppContext } from "../context/context";
 
 import { useNavigate } from "react-router-dom";
+
+import { BiArrowBack } from "react-icons/bi";
 const Thanku = () => {
   const { width, height } = useWindowSize();
 
-  const { boooked_date, number, userData } = useAppContext();
+  const {
+    boooked_date,
+    number,
+    userData,
+    setCal_Data,
+    setNumber,
+    setCb_section,
+    setnext_ques,
+    setUserData,
+    setBooked_date,
+    setTime_slots,
+    onChange,
+    mobile,
+    setmobile,
+  } = useAppContext();
   const navigate = useNavigate();
   useEffect(() => {
     if (userData.name === "") {
       navigate("/");
     }
   }, []);
-
+  const handleBackToForm = (e) => {
+    setCal_Data([]);
+    setCb_section([]);
+    setnext_ques([]);
+    setUserData({
+      name: "",
+      email: "",
+      companyUrl: "",
+      companyName: "",
+    });
+    setBooked_date("");
+    setTime_slots([]);
+    setNumber({
+      dialCode: "+91",
+      flag: "https://cdn.kcak11.com/CountryFlags/countries/in.svg",
+      isoCode: "IN",
+      name: "India",
+    });
+    setmobile("");
+    onChange(new Date());
+    navigate("/");
+  };
   return (
     <div className="thanku">
       <div className="wrapper">
+        <div className="back-arrow" onClick={handleBackToForm}>
+          <BiArrowBack style={{ fontSize: "21px" }} />
+        </div>
         <div className="scucess-img">
           <img src={scucessImg} alt="scucess" />
         </div>
@@ -59,7 +99,7 @@ const Thanku = () => {
           </div>
           <div className="item">
             <img src={phoneIcon} alt="" />
-            <p>{number?.formattedValue}</p>
+            <p>{mobile}</p>
           </div>
           <div className="item">
             <img src={websiteIcon} alt="" />
@@ -94,13 +134,13 @@ const Thanku = () => {
           <span className="f-s-12 f-w-600 text-light-black">SmatBot</span>
         </div>
       </div>
-      <Confetti
-        width={width}
-        height={height}
+      {/* <Confetti
+        width={"100vw"}
+        height={"100vh"}
         recycle={false}
         tweenDuration={20000}
         numberOfPieces={300}
-      />
+      /> */}
     </div>
   );
 };

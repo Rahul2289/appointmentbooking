@@ -193,6 +193,7 @@ function App() {
           path="/"
           element={
             <AppointForm
+              Cal_Data={Cal_Data}
               chatBotUtils_1={chatBotUtils_1}
               next_question={next_question}
               geopl={geopl}

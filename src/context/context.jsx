@@ -1,10 +1,22 @@
-import React, { useContext, useState } from "react";
-
+import React, { useContext, useState, useEffect } from "react";
+import axios from "axios";
 const AppContext = React.createContext();
 
 export const AppProvider = ({ children }) => {
   const [loading, setLoading] = useState(false);
-  const [number, setNumber] = useState();
+  const [number, setNumber] = useState({
+    dialCode: "",
+    flag: "",
+    isoCode: "",
+    name: "",
+  });
+  // const [number, setNumber] = useState({
+  //   dialCode: "+91",
+  //   flag: "https://cdn.kcak11.com/CountryFlags/countries/in.svg",
+  //   isoCode: "IN",
+  //   name: "India",
+  // });
+  const [mobile, setmobile] = useState("");
   const [error, setError] = useState("");
   const [userData, setUserData] = useState({
     name: "",
@@ -12,18 +24,44 @@ export const AppProvider = ({ children }) => {
     companyUrl: "",
     companyName: "",
   });
+  const [initialCountryFlag, setInitialCountryFlag] = useState("in");
   const [Cal_Data, setCal_Data] = useState([]);
-
+  const [dropDownSelect, setDropDownSelect] = useState(false);
   // const [Cal_Data, setCal_Data] = useState(
   //   localStorage.getItem("CalData")
   //     ? JSON.parse(localStorage.getItem("CalData"))
   //     : {}
   // );
+  const [countries, setcountries] = useState([]);
   const [cb_section, setCb_section] = useState([]);
   const [next_ques, setnext_ques] = useState([]);
   const [Time_slots, setTime_slots] = useState([]);
   const [value, onChange] = useState(new Date());
   const [boooked_date, setBooked_date] = useState("");
+  const [flagsearchValue, setFlagSearchValue] = useState("");
+  const fetchCountries = async () => {
+    try {
+      const data = await axios.get(
+        "https://gist.githubusercontent.com/kcak11/4a2f22fb8422342b3b3daa7a1965f4e4/raw/2cc0fcb49258c667f1bc387cfebdfd3a00c4a3d5/countries.json"
+      );
+      setcountries(data.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  useEffect(() => {
+    if (flagsearchValue) {
+      const filteredData = countries.filter((value) =>
+        value.name
+          .toLowerCase()
+          .trim()
+          .includes(flagsearchValue.toLowerCase().trim())
+      );
+      setcountries(filteredData);
+    } else {
+      fetchCountries();
+    }
+  }, [flagsearchValue]);
   return (
     <AppContext.Provider
       value={{
@@ -47,6 +85,17 @@ export const AppProvider = ({ children }) => {
         setnext_ques,
         Time_slots,
         setTime_slots,
+        countries,
+        setcountries,
+        initialCountryFlag,
+        setInitialCountryFlag,
+        mobile,
+        setmobile,
+        flagsearchValue,
+        setFlagSearchValue,
+        fetchCountries,
+        dropDownSelect,
+        setDropDownSelect,
       }}
     >
       {children}

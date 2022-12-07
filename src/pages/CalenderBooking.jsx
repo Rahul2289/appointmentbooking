@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 
 import calenderIcon from "../assets/calendar (1).svg";
 import profileIcon from "../assets/icons8-administrator-male-48.png";
+import manIcon from "../assets/man (4).svg";
 
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
@@ -23,6 +24,7 @@ import axios from "axios";
 
 import { ToastContainer, toast } from "react-toastify";
 const CalenderBooking = () => {
+  const [checked, setChecked] = useState(true);
   const navigate = useNavigate();
   const {
     Cal_Data,
@@ -119,7 +121,7 @@ const CalenderBooking = () => {
 
   const [timer_loader, setTimer_loader] = useState(false);
   const [standardTimeing, setStandardTimeing] = useState(
-    `(GMT${`+05:30`}) ${defaultTimeZone} `
+    `(GMT+05:30) IST, New Delhi `
   );
 
   let current_Day = value?.toString().split(" ")[0];
@@ -168,9 +170,13 @@ const CalenderBooking = () => {
     return `${hours}:${minutes}`;
   };
 
-  let options = timeZonesList.map((time) => ({
-    value: `(GMT${moment.tz(time).format("Z")}) ${time} `,
-    name: `(GMT${moment.tz(time).format("Z")}) ${time} `,
+  // let options = timeZonesList.map((time) => ({
+  //   value: `(GMT${moment.tz(time).format("Z")}) ${time} `,
+  //   name: `(GMT${moment.tz(time).format("Z")}) ${time} `,
+  // }));
+  let options = available_timezones_shedular.map((time) => ({
+    value: `(GMT${time.value}) ${time.name} `,
+    name: `(GMT${time.value}) ${time.name} `,
   }));
 
   const get_slots = async () => {
@@ -200,6 +206,7 @@ const CalenderBooking = () => {
 
         setTime_slots(res.data?.data);
         setTimer_loader(false);
+        setTimeing("00:00 PM");
       } catch (error) {
         console.log(error);
       }
@@ -232,6 +239,8 @@ const CalenderBooking = () => {
   changeDayNameToFull();
 
   const handleTimeing = (e) => {
+    setChecked(!checked);
+    // setTimeing(checked ? e.target.textContent : "00:00 PM");
     setTimeing(e.target.textContent);
   };
   useEffect(() => {
@@ -245,7 +254,7 @@ const CalenderBooking = () => {
   Conform_booked_Data.append("action", "answer");
   Conform_booked_Data.append(
     "answer_text",
-    ` ${current_Day} ${current_month} ${current_Date} ${current_year} ${timeing} `
+    `${current_Date} ${current_month} ${current_year} at ${timeing}`
   );
   Conform_booked_Data.append("cb_session", cb_section?.cb_session);
   Conform_booked_Data.append("question_id", next_ques.id);
@@ -273,7 +282,7 @@ const CalenderBooking = () => {
     ?.split(" ")[0]
     ?.split("+")[1]
     ?.split(")")[0];
-
+  console.log(Booked_Time_Zone);
   let Booked_time = `T${convertStandardTime(timeing)}:00`;
   let Booked_date = `${current_year}-${Month_number}-${current_Date}${Booked_time}+${Booked_Time_Zone}`;
 
@@ -281,7 +290,7 @@ const CalenderBooking = () => {
   booked_Data.append("chatbot_id", 12763);
   booked_Data.append("cb_session", cb_section?.cb_session);
   booked_Data.append("question_id", next_ques?.id);
-  booked_Data.append("question_id", Booked_date);
+  booked_Data.append("time", Booked_date);
 
   const handleBookTheSlot = async () => {
     if (timeing != "00:00 PM") {
@@ -334,17 +343,18 @@ const CalenderBooking = () => {
   return (
     <div className="container">
       <div className="wrapper">
-        <div className="left">
-          <p className="m-b-20 f-s-12 f-w-600 text-center">
+        <div className="left-calender">
+          <p className="m-b-20 f-s-12 f-s-14 f-w-600 text-center">
             Select your slot to schedule a demo
           </p>
           <div className=" select-section">
             <SelectSearch
+              // defaultValue="(GMT+05:30) Asia/Kolkata"
               value={standardTimeing}
               options={options}
               onChange={setStandardTimeing}
               search
-              placeholder="Search country"
+              // placeholder="Search country"
             />
             <span className="downIcon" onClick={handleDropdown}>
               {" "}
@@ -365,15 +375,17 @@ const CalenderBooking = () => {
           <div className="powred-by ">
             <span className="m-l-5">Powred By</span>
             <img src="" alt="" className="m-l-5" />
-            <span className="f-s-12 f-w-600 text-light-black">SmatBot</span>
+            <span className="f-s-12 f-s-14 f-w-600 text-light-black">
+              SmatBot
+            </span>
           </div>
         </div>
         <div className="right">
-          <p className="m-b-20 f-s-12 f-w-600">
+          <p className="m-b-20 f-s-12 f-s-14 f-w-600">
             Select the time and click confirm
           </p>
 
-          <h5 className="f-s-12 f-w-600 m-b-20">
+          <h5 className="f-s-12 f-s-14 f-w-600 m-b-20">
             {current_Date} {current_month} {current_year}, {current_Day}
           </h5>
           <div className="timeing-button-wrapper">
@@ -395,6 +407,7 @@ const CalenderBooking = () => {
               Time_slots.length > 0 &&
               Time_slots.map((time, i) => (
                 <button
+                  type="checkbox"
                   key={i}
                   className={`timeing-button ${
                     timeing === time ? "active-btn" : ""
@@ -416,18 +429,18 @@ const CalenderBooking = () => {
           <div className="under-line"></div>
 
           <div className="flex-row m-b-30 ">
-            <img src={profileIcon} alt="" width="30px" height="30px" />
+            <img src={manIcon} alt="" width="30px" height="30px" />
             <div className="m-l-5">
-              <p className="f-s-12 f-w-600 m-b-5">Vikram Goud</p>
-              <p className="f-s-10 f-w-600 text-blue">
+              <p className="f-s-12 f-s-14 f-w-600 m-b-5">Vikram Goud</p>
+              <p className="f-s-10   f-w-600 text-blue">
                 Head of sales | SmatBot
               </p>
             </div>
           </div>
 
           <div className="m-b-30 flex-row">
-            <img src={calenderIcon} alt="" width="20px" height="23px" />
-            <span className="m-l-10 f-s-10 f-w-600 text-blue">
+            <img src={calenderIcon} alt="" width="30px" height="30px" />
+            <span className="m-l-10 f-s-10  f-w-600 text-blue line-h-16">
               {current_Day}, {current_month} {current_Date}, {timeing} |{" "}
               {standardTimeing && standardTimeing}
             </span>

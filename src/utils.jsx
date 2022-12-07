@@ -1,158 +1,159 @@
 export const available_timezones_shedular = [
   {
     value: "+05:30",
-    name: "India and Sri Lanka, IST, New Delhi",
+    name: "IST, New Delhi",
   },
   {
     value: "+14:00",
-    name: "Samoa and Christmas Island / Kiribati, LINT, Kiritimati",
+    name: "LINT, Kiritimati",
   },
   {
     value: "+13:45",
-    name: "Chatham Islands / New Zealand, CHADT, Chatham Islands",
+    name: "CHADT, Chatham Islands",
   },
   {
     value: "+13:00",
-    name: "New Zealand with exceptions and 4 more, NZDT, Auckland",
+    name: "NZDT, Auckland",
   },
   {
     value: "+12:00",
-    name: "Fiji, small region of Russia, ANAT, Anadyr",
+    name: "Fiji, Anadyr",
   },
   {
     value: "+11:00",
-    name: "much of Australia and 7 more, AEDT, Melbourne",
+    name: "AEDT, Melbourne",
   },
   {
     value: "+10:30",
-    name: "small region of Australia, ACDT, Adelaide",
+    name: "ACDT, Adelaide",
   },
   {
     value: "+10:00",
-    name: "Queensland / Australia and 6 more, AEST, Brisbane",
+    name: "AEST, Brisbane",
   },
   {
     value: "+09:30",
-    name: "Northern Territory / Australia, ACST, Darwin",
+    name: "ACST, Darwin",
   },
   {
-    value: "+9",
-    name: "Japan, South Korea and , JST, Tokyo",
+    value: "+09:00",
+    name: "JST, Tokyo",
   },
   {
     value: "+08:45",
-    name: "Western Australia / Australia, ACWST, Eucla",
+    name: "ACWST, Eucla",
   },
   {
     value: "+08:00",
-    name: "China, Philippines, CST, Beijing",
+    name: "CST, Beijing",
   },
   {
     value: "+07:00",
-    name: "much of Indonesia, Thailand, WIB, Jakarta",
+    name: "WIB, Jakarta",
   },
   {
     value: "+06:30",
-    name: "Myanmar and Cocos Islands, MMT, Yangon",
+    name: "MMT, Yangon",
   },
   {
     value: "+06:00",
-    name: "Bangladesh and 6 more, BST, Dhaka",
+    name: "BST, Dhaka",
   },
   {
     value: "+05:45",
-    name: "Nepal, NPT, Kathmandu",
+    name: "NPT, Kathmandu",
   },
 
   {
     value: "+05:00",
-    name: "Pakistan and 8 more, UZT, Tashkent",
+    name: "UZT, Tashkent",
   },
   {
     value: "+04:30",
-    name: "Afghanistan, AFT, Kabul",
+    name: "AFT, Kabul",
   },
   {
     value: "+04:00",
-    name: "Azerbaijan and 8 more, GST, Dubai",
+    name: "GST, Dubai",
   },
   {
     value: "+03:30",
-    name: "Iran, IRST, Tehran",
+    name: "IRST, Tehran",
   },
   {
     value: "+03:00",
-    name: "Moscow / Russia and 22 more, MSK, Moscow",
+    name: "MSK, Moscow",
   },
   {
     value: "+02:00",
-    name: "Greece and 31 more, EET, Cairo",
+    name: "EET, Cairo",
   },
   {
     value: "+01:00",
-    name: "Germany and 45 more, CET, Brussels",
+    name: "CET, Brussels",
   },
   {
     value: "+00:00",
-    name: "United Kingdom and 24 more, GMT, London",
+    name: "GMT, London",
   },
   {
     value: "-01:00",
-    name: "Cabo Verde and 2 more, CVT, Praia",
+    name: "CVT, Praia",
   },
   {
     value: "-02:00",
-    name: "Pernambuco / Brazil and South Georgia / Sandwich Is., GST, King Edward Point",
+    name: "GST, King Edward Point",
   },
   {
     value: "-03:00",
-    name: "most of Brazil, Argentina and 9 more, ART, Buenos Aires",
+    name: "ART, Buenos Aires",
   },
   {
     value: "-03:30",
-    name: "Newfoundland and Labrador / Canada, NST, St.John 's",
+    name: "NST, St.John 's",
   },
   {
     value: "-04:00",
-    name: "some regions of Canada and 28 more, VET, Caracas",
+    name: "VET, Caracas",
   },
   {
     value: "-05:00",
-    name: "regions of USA and 14 more, EST, New York",
+    name: "EST, New York",
   },
   {
     value: "-06:00",
-    name: "regions of USA and 9 more, CST, Mexico City",
+    name: "CST,Mexico City",
   },
   {
     value: "-07:00",
-    name: "some regions of USA and 2 more, MST, Calgary",
+    name: "MST, Calgary",
   },
   {
     value: "-08:00",
-    name: "regions of USA and 4 more, PST, Los Angeles",
+    name: "PST, Los Angeles",
   },
   {
     value: "-09:00",
-    name: "Alaska / USA and regions of French Polynesia, AKST, Anchorage",
+    name: "AKST, Anchorage",
   },
   {
     value: "-09:30",
-    name: "Marquesas Islands / French Polynesia, MART, Taiohae",
+    name: "MART, Taiohae",
   },
   {
     value: "-10:00",
-    name: "small region of USA and 2 more, HST, Honolulu",
+    name: "HST, Honolulu",
   },
   {
     value: "-11:00",
-    name: "American Samoa and 2 more, NUT, Alofi",
+    name: "NUT, Alofi",
   },
   {
     value: "-12:00",
-    name: "much of US Minor Outlying Islands, AoE, Baker Island",
+    name: "AoE, Baker Island",
   },
 ];
+
 export const timeings = [
   "09:00 am",
   "10:00 am",

@@ -1,9 +1,11 @@
 import { Navigate } from "react-router-dom";
 
 const Protected = ({ Cal_Data, children }) => {
+  console.log(Cal_Data.length);
   if (Cal_Data.length === 0) {
     return <Navigate to="/" replace />;
   }
+
   return children;
 };
 
