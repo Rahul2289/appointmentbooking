@@ -136,13 +136,15 @@ const Thanku = () => {
           <span className="f-s-12 f-w-600 text-light-black">SmatBot</span>
         </div>
       </div>
-      <Confetti
-        width={width}
-        height={height}
-        recycle={false}
-        tweenDuration={10000}
-        numberOfPieces={300}
-      />
+      {/* {width > "1000" && (
+        <Confetti
+          width={width}
+          height={height}
+          recycle={false}
+          tweenDuration={10000}
+          numberOfPieces={300}
+        />
+      )} */}
     </div>
   );
 };
