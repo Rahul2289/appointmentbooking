@@ -178,7 +178,19 @@ const CalenderBooking = () => {
     value: `(GMT${time.value}) ${time.name} `,
     name: `(GMT${time.value}) ${time.name} `,
   }));
+  const timeZone_value = standardTimeing
+    .split(" ")[0]
+    .split("+")[1]
+    .split(")")[0];
 
+  const Start_time_value = `${current_year}-${Month_number}-${current_Date}T00:00:00+${timeZone_value}`;
+  const End_time_value = `${current_year}-${Month_number}-${current_Date}T23:59:59+${timeZone_value}`;
+  const Current_Time_value = `${current_year}-${Month_number}-${current_Date}${moment(
+    new Date().toLocaleTimeString().split(" "),
+    "h:mm:ss A"
+  ).format("HH:mm:ss")}+${timeZone_value}`;
+  console.log("s----", Start_time);
+  console.log("t---", Start_time_value);
   const get_slots = async () => {
     if (value) {
       try {
@@ -189,16 +201,16 @@ const CalenderBooking = () => {
           }&question_id=${next_ques?.id}&cb_session=${
             cb_section?.cb_session
           }&starttime=${encodeURIComponent(
-            Start_time
-          )}&endtime=${encodeURIComponent(End_time)}&interval=${
+            Start_time_value
+          )}&endtime=${encodeURIComponent(End_time_value)}&interval=${
             data?.interval
-          }&bookings_per_slot=${data?.bookings_per_slot}&timezone=${
-            data?.timezone
-          }
+          }&bookings_per_slot=${
+            data?.bookings_per_slot
+          }&timezone=+${timeZone_value}
          ${
            value.toString().substring(0, 15) ===
            new Date().toString().substring(0, 15)
-             ? `&current_time=${encodeURIComponent(Current_Time)}`
+             ? `&current_time=${encodeURIComponent(Current_Time_value)}`
              : ""
          }
           `
@@ -213,6 +225,31 @@ const CalenderBooking = () => {
     }
   };
 
+  const get_slots_timezone = async () => {
+    if (standardTimeing) {
+      try {
+        setTimer_loader(true);
+        const res = await axios.get(
+          `https://www.smatbot.com/kya_backend/pagehub/getSlots?chatbot_id=${
+            next_ques?.chatbot_id
+          }&question_id=${next_ques?.id}&cb_session=${
+            cb_section?.cb_session
+          }&starttime=${encodeURIComponent(
+            Start_time_value
+          )}&endtime=${encodeURIComponent(End_time_value)}&interval=${
+            data?.interval
+          }&bookings_per_slot=${data?.bookings_per_slot}
+          `
+        );
+
+        setTime_slots(res.data?.data);
+        setTimer_loader(false);
+        setTimeing("00:00 PM");
+      } catch (error) {
+        console.log(error);
+      }
+    }
+  };
   const handleDropdown = () => {
     let focusInput = document.querySelector(".select-search-container");
     focusInput.classList.add("select-search-has-focus");
@@ -248,6 +285,13 @@ const CalenderBooking = () => {
       get_slots();
     }
   }, [value]);
+
+  useEffect(() => {
+    if (standardTimeing) {
+      get_slots_timezone();
+    }
+  }, [standardTimeing]);
+
   console.log(next_ques?.sequence);
   console.log(value);
   const Conform_booked_Data = new FormData();
@@ -298,7 +342,7 @@ const CalenderBooking = () => {
         setLoading(true);
         toast.success("Your slot is Booked", {
           position: "top-center",
-          autoClose: 3000,
+          autoClose: 1500,
           hideProgressBar: false,
           closeOnClick: true,
           pauseOnHover: true,
@@ -320,7 +364,7 @@ const CalenderBooking = () => {
         );
         conformed_booking();
         setTimeout(() => {
-          navigate("/thanku");
+          navigate("/thankYou");
           setLoading(false);
         }, 1000);
       } catch (error) {
@@ -345,7 +389,7 @@ const CalenderBooking = () => {
       <div className="wrapper">
         <div className="left-calender">
           <p className="m-b-20 f-s-12 f-s-14 f-w-600 text-center">
-            Select your slot to schedule a demo
+            Select a slot to schedule a Demo.
           </p>
           <div className=" select-section">
             <SelectSearch
@@ -373,7 +417,7 @@ const CalenderBooking = () => {
           />
 
           <div className="powred-by ">
-            <span className="m-l-5">Powred By</span>
+            <span className="m-l-5">Powered by</span>
             <img src="" alt="" className="m-l-5" />
             <span className="f-s-12 f-s-14 f-w-600 text-light-black">
               SmatBot
@@ -382,7 +426,7 @@ const CalenderBooking = () => {
         </div>
         <div className="right">
           <p className="m-b-20 f-s-12 f-s-14 f-w-600">
-            Select the time and click confirm
+            Select the time and then click on confirm.
           </p>
 
           <h5 className="f-s-12 f-s-14 f-w-600 m-b-20">
@@ -433,7 +477,7 @@ const CalenderBooking = () => {
             <div className="m-l-5">
               <p className="f-s-12 f-s-14 f-w-600 m-b-5">Vikram Goud</p>
               <p className="f-s-10   f-w-600 text-blue">
-                Head of sales | SmatBot
+                Head of Sales | SmatBot
               </p>
             </div>
           </div>
@@ -463,7 +507,7 @@ const CalenderBooking = () => {
                 colors={["#ffff", "#ffff", "#ffff", "#ffff", "#ffff"]}
               />
             )}
-            <span>Looks good schedule it</span>
+            <span>Looks Good! Schedule it.</span>
           </button>
         </div>
       </div>

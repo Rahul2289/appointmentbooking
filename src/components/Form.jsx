@@ -6,6 +6,7 @@ import { ColorRing } from "react-loader-spinner";
 import checkedIcon from "../assets/check-rounded.svg";
 
 import { useAppContext } from "../context/context";
+import { useOutsideClick } from "./WIthClickOutSIde";
 
 const Form = (props) => {
   const {
@@ -35,20 +36,28 @@ const Form = (props) => {
   } = props;
 
   useEffect(() => {
-    if (geopl) {
-      countries.filter((data) => {
-        if (data.isoCode.toString() === geopl.country_code.toString()) {
-          setNumber({
-            dialCode: data.dialCode ? data.dialCode : "+91",
-            flag: data.flag
-              ? data.flag
-              : "https://cdn.kcak11.com/CountryFlags/countries/in.svg",
-            isoCode: data.isoCode ? data.isoCode : "IN",
-            name: data.name ? data.name : "India",
-          });
-        }
-      });
-    }
+    countries.filter((data) => {
+      if (data.isoCode === geopl.country_code) {
+        console.log(data.isoCode === geopl.country_code);
+        console.log("country", data.isoCode);
+        console.log("geopl", geopl.country_code);
+        // setNumber({
+        //   dialCode: data.dialCode ? data.dialCode : "+91",
+        //   flag: data.flag
+        //     ? data.flag
+        //     : "https://cdn.kcak11.com/CountryFlags/countries/in.svg",
+        //   isoCode: data.isoCode ? data.isoCode : "IN",
+        //   name: data.name ? data.name : "India",
+        // });
+        setInitialCountryFlag(data.isoCode.toLowerCase());
+        setNumber({
+          dialCode: data.dialCode,
+          flag: data.flag,
+          isoCode: data.isoCode,
+          name: data.name,
+        });
+      }
+    });
   }, [geopl]);
 
   const handlecountrydata = (data) => {
@@ -62,6 +71,11 @@ const Form = (props) => {
     setDropDownSelect(false);
     setFlagSearchValue("");
   };
+  const handleDropDown = () => {
+    setDropDownSelect(false);
+  };
+
+  const ref = useOutsideClick(handleDropDown);
 
   return (
     <form onSubmit={handleSubmit}>
@@ -74,7 +88,7 @@ const Form = (props) => {
         <input
           type="text"
           placeholder={`${
-            error === "nameErr" ? "Enter valid name" : "Enter your name"
+            error === "nameErr" ? "Enter valid name" : "Enter your Name"
           }`}
           name="name"
           onChange={handleChange}
@@ -125,41 +139,8 @@ const Form = (props) => {
             ? "green-border"
             : "normal-border"
         } ${error === "numberErr" ? "red-border" : "normal-border"}`}
+        ref={ref}
       >
-        {/* <PhoneInput
-          placeholder={`${
-            error === "numberErr" ? "Enter valid number" : "Enter mobile number"
-          }`}
-          country="in"
-          // value={number?.rawPhone}
-          onChange={(value, country, e, formattedValue) =>
-            setNumber({
-              rawPhone: value?.slice(number?.country?.dialCode.length),
-              value,
-              country,
-              e,
-              formattedValue,
-            })
-          }
-          inputProps={{
-            name: "phone",
-            required: true,
-            autoFocus: false,
-            autoComplete: "off",
-          }}
-          // disableCountryGuess
-
-          preferredCountries={["in", "us"]}
-          enableSearchField
-          enableSearch
-          searchClass="search-class"
-          searchStyle={{ margin: "0", width: "97%", height: "30px" }}
-          disableSearchIcon
-          searchPlaceholder="search "
-          disableCountryCode
-          // disableInitialCountryGuess
-        /> */}
-
         <div
           className="flag-input"
           onClick={() => setDropDownSelect(!dropDownSelect)}
@@ -175,6 +156,7 @@ const Form = (props) => {
           className={`country-flag-input-scrool ${
             dropDownSelect ? "show" : "hidden"
           }`}
+          // ref={ref}
         >
           <input
             className="country-input-search"
@@ -212,7 +194,9 @@ const Form = (props) => {
           value={mobile}
           onChange={(e) => setmobile(e.target.value)}
           placeholder={`${
-            error === "numberErr" ? "Enter valid number" : "Enter your number"
+            error === "numberErr"
+              ? "Enter valid number"
+              : "Enter your WhatsApp Number"
           }`}
         />
 
@@ -237,7 +221,7 @@ const Form = (props) => {
         <input
           type="text"
           placeholder={`${
-            error === "urlErr" ? "Enter valid url" : "Enter website url"
+            error === "urlErr" ? "Enter valid url" : "Enter your Website URL"
           }`}
           name="companyUrl"
           onChange={handleChange}
@@ -264,7 +248,9 @@ const Form = (props) => {
         <input
           type="text"
           placeholder={`${
-            error === "compNameErr" ? "Enter valid name" : "Enter Company name"
+            error === "compNameErr"
+              ? "Enter valid name"
+              : "Enter your Company Name"
           }`}
           name="companyName"
           onChange={handleChange}
@@ -293,7 +279,7 @@ const Form = (props) => {
             colors={["#ffff", "#ffff", "#ffff", "#ffff", "#ffff"]}
           />
         )}
-        <span> Continue to book a slot</span>{" "}
+        <span>Click to Book a Slot</span>{" "}
       </button>
     </form>
   );

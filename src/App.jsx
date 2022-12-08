@@ -210,7 +210,7 @@ function App() {
             </Protected>
           }
         />
-        <Route path="/thanku" element={<Thanku />} />
+        <Route path="/thankYou" element={<Thanku />} />
       </Routes>
     </BrowserRouter>
   );

@@ -24,7 +24,7 @@ export const AppProvider = ({ children }) => {
     companyUrl: "",
     companyName: "",
   });
-  const [initialCountryFlag, setInitialCountryFlag] = useState("in");
+  const [initialCountryFlag, setInitialCountryFlag] = useState("");
   const [Cal_Data, setCal_Data] = useState([]);
   const [dropDownSelect, setDropDownSelect] = useState(false);
   // const [Cal_Data, setCal_Data] = useState(
@@ -49,6 +49,43 @@ export const AppProvider = ({ children }) => {
       console.log(error);
     }
   };
+  const fetch_country_init = () => {
+    let indiaCountry = {};
+    let unitedCountry = {};
+    let americaCountry = {};
+    let filterIndia = countries.filter((res) => res.name === "India");
+    filterIndia.map((data) => {
+      indiaCountry.name = data.name;
+      indiaCountry.dialCode = data.dialCode;
+      indiaCountry.flag = data.flag;
+      indiaCountry.isoCode = data.isoCode;
+    });
+    let filterunitedKingdom = countries.filter(
+      (res) => res.name === "United Kingdom"
+    );
+    filterunitedKingdom.map((data) => {
+      unitedCountry.name = data.name;
+      unitedCountry.dialCode = data.dialCode;
+      unitedCountry.flag = data.flag;
+      unitedCountry.isoCode = data.isoCode;
+    });
+    let filteramerica = countries.filter((res) => res.name === "United States");
+    filteramerica.map((data) => {
+      americaCountry.name = data.name;
+      americaCountry.dialCode = data.dialCode;
+      americaCountry.flag = data.flag;
+      americaCountry.isoCode = data.isoCode;
+    });
+    countries.unshift(unitedCountry);
+    countries.unshift(americaCountry);
+    countries.unshift(indiaCountry);
+  };
+
+  // useEffect(() => {
+  //   fetch_country_init();
+  // }, [countries]);
+
+  console.log(countries);
   useEffect(() => {
     if (flagsearchValue) {
       const filteredData = countries.filter((value) =>
@@ -60,6 +97,7 @@ export const AppProvider = ({ children }) => {
       setcountries(filteredData);
     } else {
       fetchCountries();
+      // fetch_country_init();
     }
   }, [flagsearchValue]);
   return (

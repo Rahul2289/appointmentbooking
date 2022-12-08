@@ -99,7 +99,9 @@ const Thanku = () => {
           </div>
           <div className="item">
             <img src={phoneIcon} alt="" />
-            <p>{mobile}</p>
+            <p>
+              {number?.dialCode} {mobile}
+            </p>
           </div>
           <div className="item">
             <img src={websiteIcon} alt="" />
@@ -134,13 +136,13 @@ const Thanku = () => {
           <span className="f-s-12 f-w-600 text-light-black">SmatBot</span>
         </div>
       </div>
-      {/* <Confetti
-        width={"100vw"}
-        height={"100vh"}
+      <Confetti
+        width={width}
+        height={height}
         recycle={false}
-        tweenDuration={20000}
+        tweenDuration={10000}
         numberOfPieces={300}
-      /> */}
+      />
     </div>
   );
 };

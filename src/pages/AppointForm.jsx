@@ -10,6 +10,7 @@ import Form from "./../components/Form";
 import { emailRegex, urlRegEx } from "./../utils";
 import axios from "axios";
 import { useAppContext } from "../context/context";
+import { useOutsideClick } from "./../components/WIthClickOutSIde";
 
 function AppointForm({
   geopl,
@@ -18,6 +19,9 @@ function AppointForm({
   sheet_id,
   visitorId,
 }) {
+  const handleHeaderClick = (event) => {
+    event.stopPropagation();
+  };
   const {
     cb_section,
     Cal_Data,
@@ -190,37 +194,37 @@ function AppointForm({
   }, [Cal_Data, cb_section]);
 
   return (
-    <div className="container">
+    <div className="container" onClick={handleHeaderClick}>
       <div className="wrapper">
         <div className="left">
           <p className="m-b-10 text-color-lightblue-1  f-w-600 f-s-14  f-s-18">
             SmatBot
           </p>
           <h2 className="m-b-20 f-s-20 f-s-24 text-light-black">
-            Book Demo with SmatBot
+            Book a Demo with SmatBot
           </h2>
           <div className="row m-b-20">
             <img src={stopWatch} alt="stopwatch" width="20px" height="20px" />
             <p className="text-color-lightblue-1  f-w-600 f-s-14 f-s-18 m-l-20">
               {" "}
-              45 Minutes
+              30 Minutes
             </p>
           </div>
           <div className="row m-b-20">
             <img src={videoIcon} alt="videoIcon" width="20px" height="20px" />
             <p className="text-color-lightblue-1  f-w-600 f-s-14  f-s-18 m-l-20">
               {" "}
-              Demo confirmation details will be sent upon confirmation
+              Confirmation details will be sent by email.
             </p>
           </div>
           <p className="m-b-20 text-light-blue f-w-500 f-s-14 f-s-18">Hey!</p>
           <p className="m-b-20 inline-h-30 text-light-blue f-w-500 f-s-14 f-s-18">
-            We're delighted to see that you are interested in SmatBot. This call
-            will help us get to know each other and find ways that SmatBot can
+            We are delighted that you are interested in SmatBot. This call will
+            help us get to know each other and show you ways that SmatBot can
             help your organization.
           </p>
           <div className="powred-by ">
-            <span className="m-l-5">Powred By</span>
+            <span className="m-l-5">Powered by</span>
             <img src="" alt="" className="m-l-5" />
             <span className="f-s-10 f-s-14 f-w-600 text-light-black">
               SmatBot
