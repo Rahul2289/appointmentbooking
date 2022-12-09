@@ -130,10 +130,12 @@ const Thanku = () => {
             Sign Up
           </a>
         </div>
-        <div className="powred-by">
-          <span className="m-l-5">Powred By</span>
+        <div className="powred-by ">
+          <span className="m-l-5">Powered by</span>
           <img src="" alt="" className="m-l-5" />
-          <span className="f-s-12 f-w-600 text-light-black">SmatBot</span>
+          <span className="f-s-12 f-s-14 f-w-600 text-light-black">
+            SmatBot
+          </span>
         </div>
       </div>
       {/* {width > "1000" && (
