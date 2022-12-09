@@ -39,28 +39,6 @@ const Thanku = () => {
       navigate("/");
     }
   }, []);
-  // const handleBackToForm = (e) => {
-  //   setCal_Data([]);
-  //   setCb_section([]);
-  //   setnext_ques([]);
-  //   setUserData({
-  //     name: "",
-  //     email: "",
-  //     companyUrl: "",
-  //     companyName: "",
-  //   });
-  //   setBooked_date("");
-  //   setTime_slots([]);
-  //   setNumber({
-  //     dialCode: "+91",
-  //     flag: "https://cdn.kcak11.com/CountryFlags/countries/in.svg",
-  //     isoCode: "IN",
-  //     name: "India",
-  //   });
-  //   setmobile("");
-  //   onChange(new Date());
-  //   navigate("/");
-  // };
 
   return (
     <div className="thanku">
@@ -68,6 +46,7 @@ const Thanku = () => {
         <div className="back-arrow">
           <a href="https://www.smatbot.com/">
             <BiArrowBack style={{ fontSize: "21px" }} />
+            <span>Home</span>
           </a>
         </div>
         <div className="scucess-img">
@@ -139,10 +118,14 @@ const Thanku = () => {
         </div>
         <div className="powred-by ">
           <span className="m-l-5">Powered by</span>
-          <img src="" alt="" className="m-l-5" />
-          <span className="f-s-12 f-s-14 f-w-600 text-light-black">
+          {/* <img src="" alt="" className="m-l-5" /> */}
+          <a
+            href="https://www.smatbot.com"
+            target="_blank"
+            className="f-s-10 f-s-14 f-w-600 text-light-black"
+          >
             SmatBot
-          </span>
+          </a>
         </div>
       </div>
       {width > 1000 && (

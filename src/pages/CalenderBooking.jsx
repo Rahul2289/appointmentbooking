@@ -366,7 +366,7 @@ const CalenderBooking = () => {
         setTimeout(() => {
           navigate("/thankYou");
           setLoading(false);
-        }, 1000);
+        }, 600);
       } catch (error) {
         console.log(error);
       }
@@ -418,10 +418,14 @@ const CalenderBooking = () => {
 
           <div className="powred-by ">
             <span className="m-l-5">Powered by</span>
-            <img src="" alt="" className="m-l-5" />
-            <span className="f-s-12 f-s-14 f-w-600 text-light-black">
+            {/* <img src="" alt="" className="m-l-5" /> */}
+            <a
+              href="https://www.smatbot.com"
+              target="_blank"
+              className="f-s-10 f-s-14 f-w-600 text-light-black"
+            >
               SmatBot
-            </span>
+            </a>
           </div>
         </div>
         <div className="right">
