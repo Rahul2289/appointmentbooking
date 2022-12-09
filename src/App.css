@@ -928,7 +928,7 @@ button.react-calendar__tile.react-calendar__month-view__days__day:enabled:hover 
     padding: 0 8px;
   }
 }
-.confetti {
+/* .confetti {
   width: 8px;
   height: 8px;
   position: absolute;
@@ -939,4 +939,4 @@ button.react-calendar__tile.react-calendar__month-view__days__day:enabled:hover 
   right: 0;
   will-change: transform;
   pointer-events: none;
-}
+} */
