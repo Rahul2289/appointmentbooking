@@ -943,15 +943,25 @@ button.react-calendar__tile.react-calendar__month-view__days__day:enabled:hover 
     padding: 0 8px;
   }
 }
-/* .confetti {
-  width: 8px;
-  height: 8px;
-  position: absolute;
-  z-index: 11;
-  background: var(--color);
-  top: 0;
-  left: 0;
-  right: 0;
-  will-change: transform;
-  pointer-events: none;
+.country-flag-input-scrool.show {
+  animation: smooth 500ms ease;
+}
+@keyframes smooth {
+  from {
+    height: 0px;
+  }
+  to {
+    height: 220px;
+  }
+}
+/* .country-flag-input-scrool.hidden {
+  animation-name: smoothout;
+}
+@keyframes smoothout {
+  from {
+    height: 220px;
+  }
+  to {
+    height: 0px;
+  }
 } */

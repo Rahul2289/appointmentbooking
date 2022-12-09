@@ -86,20 +86,19 @@ export const AppProvider = ({ children }) => {
   // }, [countries]);
 
   console.log(countries);
-  useEffect(() => {
-    if (flagsearchValue) {
-      const filteredData = countries.filter((value) =>
-        value.name
-          .toLowerCase()
-          .trim()
-          .includes(flagsearchValue.toLowerCase().trim())
-      );
-      setcountries(filteredData);
-    } else {
-      fetchCountries();
-      // fetch_country_init();
-    }
-  }, [flagsearchValue]);
+  // useEffect(() => {
+  //   if (flagsearchValue) {
+  //     const filteredData = countries.filter((value) =>
+  //       value.name
+  //         .toLowerCase()
+  //         .trim()
+  //         .includes(flagsearchValue.toLowerCase().trim())
+  //     );
+  //     setcountries(filteredData);
+  //   } else {
+  //     fetchCountries();
+  //   }
+  // }, [flagsearchValue]);
   return (
     <AppContext.Provider
       value={{
@@ -134,6 +133,7 @@ export const AppProvider = ({ children }) => {
         fetchCountries,
         dropDownSelect,
         setDropDownSelect,
+        fetchCountries,
       }}
     >
       {children}

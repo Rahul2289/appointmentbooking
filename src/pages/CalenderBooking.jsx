@@ -106,7 +106,7 @@ const CalenderBooking = () => {
   let block_days = total_week_days.filter(function (n) {
     return !this.has(n);
   }, new Set(data?.weekdays));
-
+  console.log(block_days);
   // const disable_weaks = (date, block_days) => {
   //   return block_days.map((weaks) => date.getDay() === weaks);
   // };
@@ -411,7 +411,10 @@ const CalenderBooking = () => {
             minDate={data?.date_range[0] === "a" ? new Date() : min_date}
             tileDisabled={({ date, view }) =>
               view === "month" &&
-              block_days.some((weak) => date.getDay() === weak - 1)
+              // block_days.some((weak) => date.getDay() === weak)
+              block_days.some((weak) =>
+                weak === 7 ? date.getDay() === 0 : date.getDay() === weak
+              )
             }
             maxDate={data?.date_range[0] === "b" ? new Date() : max_date}
           />

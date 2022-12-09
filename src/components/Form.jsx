@@ -21,6 +21,7 @@ const Form = (props) => {
     setFlagSearchValue,
     dropDownSelect,
     setDropDownSelect,
+    fetchCountries,
   } = useAppContext();
 
   const {
@@ -76,6 +77,31 @@ const Form = (props) => {
   };
 
   const ref = useOutsideClick(handleDropDown);
+
+  const [filteredResults, setFilteredResults] = useState([]);
+
+  const searchItems = (searchValue) => {
+    setFlagSearchValue(searchValue.trim());
+    if (flagsearchValue !== "") {
+      const filteredData = countries.filter((item) => {
+        return Object.values(item.name)
+          .join("")
+          .toLowerCase()
+          .includes(flagsearchValue.toLowerCase())
+          ? Object.values(item.name)
+              .join("")
+              .toLowerCase()
+              .includes(flagsearchValue.toLowerCase())
+          : Object.values(item.dialCode)
+              .join("")
+
+              .includes(flagsearchValue);
+      });
+      setFilteredResults(filteredData);
+    } else {
+      setFilteredResults(countries);
+    }
+  };
 
   return (
     <form onSubmit={handleSubmit}>
@@ -165,30 +191,65 @@ const Form = (props) => {
             type="text"
             placeholder="search"
             value={flagsearchValue}
-            onChange={(e) => setFlagSearchValue(e.target.value)}
+            // onChange={handleSearchFilter}
+            onChange={(e) => searchItems(e.target.value)}
           />
-          {countries.map((data, i) => {
-            return (
-              <ul className="country-list " role="listbox" key={i}>
-                <li
-                  className={`country ${
-                    data.dialCode === number.dialCode ? "highlight" : ""
-                  }`}
-                  data-dial-code={data.dialCode}
-                  data-country-code={data.isoCode}
-                  role="option"
-                  aria-selected="true"
-                  onClick={() => handlecountrydata(data)}
-                >
-                  <div className="flag in">
-                    <img src={data.flag} alt="" width="20px" height="20px" />
-                  </div>
-                  <span className="country-name">{data.name}</span>
-                  <span className="dial-code">{data.dialCode}</span>
-                </li>
-              </ul>
-            );
-          })}
+          {flagsearchValue.length > 1
+            ? filteredResults.map((data, i) => {
+                return (
+                  <ul className="country-list " role="listbox" key={i}>
+                    <li
+                      className={`country ${
+                        data.dialCode === number.dialCode ? "highlight" : ""
+                      }`}
+                      data-dial-code={data.dialCode}
+                      data-country-code={data.isoCode}
+                      role="option"
+                      aria-selected="true"
+                      onClick={() => handlecountrydata(data)}
+                    >
+                      <div className="flag in">
+                        <img
+                          src={data.flag}
+                          alt=""
+                          width="20px"
+                          height="20px"
+                        />
+                      </div>
+                      <span className="country-name">{data.name}</span>
+                      <span className="dial-code">{data.dialCode}</span>
+                    </li>
+                  </ul>
+                );
+              })
+            : countries.map((data, i) => {
+                return (
+                  <ul className="country-list " role="listbox" key={i}>
+                    <li
+                      className={`country ${
+                        data.dialCode === number.dialCode ? "highlight" : ""
+                      }`}
+                      data-dial-code={data.dialCode}
+                      data-country-code={data.isoCode}
+                      role="option"
+                      aria-selected="true"
+                      onClick={() => handlecountrydata(data)}
+                    >
+                      <div className="flag in">
+                        <img
+                          src={data.flag}
+                          alt=""
+                          width="20px"
+                          height="20px"
+                        />
+                      </div>
+                      <span className="country-name">{data.name}</span>
+                      <span className="dial-code">{data.dialCode}</span>
+                    </li>
+                  </ul>
+                );
+              })}
+          {}
         </div>
         <input
           type="tel"
