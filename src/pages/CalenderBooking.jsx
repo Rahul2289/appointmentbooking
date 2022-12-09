@@ -281,7 +281,7 @@ const CalenderBooking = () => {
     setTimeing(e.target.textContent);
   };
   useEffect(() => {
-    if (next_ques?.chatbot_id) {
+    if (value) {
       get_slots();
     }
   }, [value]);

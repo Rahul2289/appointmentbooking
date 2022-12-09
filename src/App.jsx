@@ -211,6 +211,7 @@ function App() {
           }
         />
         <Route path="/thankYou" element={<Thanku />} />
+        {/* <Route path="*" element={<AppointForm />} /> */}
       </Routes>
     </BrowserRouter>
   );
