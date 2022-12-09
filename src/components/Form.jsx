@@ -116,7 +116,9 @@ const Form = (props) => {
         <input
           type="email"
           placeholder={`${
-            error === "emailErr" ? "Enter valid email" : "Enter your Email"
+            error === "emailErr"
+              ? "Enter valid email"
+              : "Enter your Business Email"
           }`}
           name="email"
           onChange={handleChange}
