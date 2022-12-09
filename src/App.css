@@ -479,7 +479,8 @@ button.react-calendar__tile.react-calendar__month-view__days__day:enabled:hover 
   color: #fff;
 }
 .under-line {
-  border: 1px solid #d5d5d5;
+  border: 1px solid #e5efff;
+  background-color: #e5efff;
   margin-top: 20px;
   margin-bottom: 20px;
 }

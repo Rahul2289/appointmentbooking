@@ -279,20 +279,19 @@ const CalenderBooking = () => {
     // setTimeing(checked ? e.target.textContent : "00:00 PM");
     setTimeing(e.target.textContent);
   };
-  useEffect(() => {
-    setTimeout(() => {
-      if (value) {
-        get_slots();
-      }
-    }, 1000);
-  }, [value]);
 
   useEffect(() => {
     if (standardTimeing) {
       get_slots_timezone();
     }
   }, [standardTimeing]);
-
+  useEffect(() => {
+    // setTimeout(() => {
+    if (value) {
+      get_slots();
+    }
+    // }, 1000);
+  }, [standardTimeing, value]);
   console.log(next_ques?.sequence);
   console.log(value);
   const Conform_booked_Data = new FormData();
@@ -367,7 +366,7 @@ const CalenderBooking = () => {
         setTimeout(() => {
           navigate("/thankYou");
           setLoading(false);
-        }, 600);
+        }, 500);
       } catch (error) {
         console.log(error);
       }
