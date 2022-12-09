@@ -37,6 +37,8 @@ const CalenderBooking = () => {
     value,
     onChange,
     setBooked_date,
+    standardTimeing,
+    setStandardTimeing,
   } = useAppContext();
 
   console.log(Cal_Data.length);
@@ -120,9 +122,6 @@ const CalenderBooking = () => {
   const [timeing, setTimeing] = useState("00:00 PM");
 
   const [timer_loader, setTimer_loader] = useState(false);
-  const [standardTimeing, setStandardTimeing] = useState(
-    `(GMT+05:30) IST, New Delhi `
-  );
 
   let current_Day = value?.toString().split(" ")[0];
   let current_month = value?.toString().split(" ")[1];
@@ -281,9 +280,11 @@ const CalenderBooking = () => {
     setTimeing(e.target.textContent);
   };
   useEffect(() => {
-    if (value) {
-      get_slots();
-    }
+    setTimeout(() => {
+      if (value) {
+        get_slots();
+      }
+    }, 1000);
   }, [value]);
 
   useEffect(() => {

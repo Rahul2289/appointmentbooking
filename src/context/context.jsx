@@ -4,18 +4,18 @@ const AppContext = React.createContext();
 
 export const AppProvider = ({ children }) => {
   const [loading, setLoading] = useState(false);
-  const [number, setNumber] = useState({
-    dialCode: "",
-    flag: "",
-    isoCode: "",
-    name: "",
-  });
   // const [number, setNumber] = useState({
-  //   dialCode: "+91",
-  //   flag: "https://cdn.kcak11.com/CountryFlags/countries/in.svg",
-  //   isoCode: "IN",
-  //   name: "India",
+  //   dialCode: "",
+  //   flag: "",
+  //   isoCode: "",
+  //   name: "",
   // });
+  const [number, setNumber] = useState({
+    dialCode: "+91",
+    flag: "https://cdn.kcak11.com/CountryFlags/countries/in.svg",
+    isoCode: "IN",
+    name: "India",
+  });
   const [mobile, setmobile] = useState("");
   const [error, setError] = useState("");
   const [userData, setUserData] = useState({
@@ -24,7 +24,7 @@ export const AppProvider = ({ children }) => {
     companyUrl: "",
     companyName: "",
   });
-  const [initialCountryFlag, setInitialCountryFlag] = useState("");
+  const [initialCountryFlag, setInitialCountryFlag] = useState("in");
   const [Cal_Data, setCal_Data] = useState([]);
   const [dropDownSelect, setDropDownSelect] = useState(false);
   // const [Cal_Data, setCal_Data] = useState(
@@ -37,6 +37,9 @@ export const AppProvider = ({ children }) => {
   const [next_ques, setnext_ques] = useState([]);
   const [Time_slots, setTime_slots] = useState([]);
   const [value, onChange] = useState(new Date());
+  const [standardTimeing, setStandardTimeing] = useState(
+    `(GMT+05:30) IST, New Delhi `
+  );
   const [boooked_date, setBooked_date] = useState("");
   const [flagsearchValue, setFlagSearchValue] = useState("");
   const fetchCountries = async () => {
@@ -133,7 +136,8 @@ export const AppProvider = ({ children }) => {
         fetchCountries,
         dropDownSelect,
         setDropDownSelect,
-        fetchCountries,
+        standardTimeing,
+        setStandardTimeing,
       }}
     >
       {children}
