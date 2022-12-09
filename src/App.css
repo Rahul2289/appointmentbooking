@@ -736,6 +736,10 @@ button.react-calendar__tile.react-calendar__month-view__days__day:enabled:hover 
   .thanks-text-info {
     max-width: 90%;
   }
+  .back-arrow {
+    left: 15px;
+    top: 20px;
+  }
 }
 @media screen and (max-width: 1549px) {
   .f-s-10 {
