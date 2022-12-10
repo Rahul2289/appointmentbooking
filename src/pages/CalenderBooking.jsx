@@ -179,17 +179,19 @@ const CalenderBooking = () => {
   }));
   const timeZone_value = standardTimeing
     .split(" ")[0]
-    .split("+")[1]
+    .split("T")[1]
     .split(")")[0];
 
-  const Start_time_value = `${current_year}-${Month_number}-${current_Date}T00:00:00+${timeZone_value}`;
-  const End_time_value = `${current_year}-${Month_number}-${current_Date}T23:59:59+${timeZone_value}`;
+  const Start_time_value = `${current_year}-${Month_number}-${current_Date}T00:00:00${timeZone_value}`;
+  const End_time_value = `${current_year}-${Month_number}-${current_Date}T23:59:59${timeZone_value}`;
   const Current_Time_value = `${current_year}-${Month_number}-${current_Date}${moment(
     new Date().toLocaleTimeString().split(" "),
     "h:mm:ss A"
-  ).format("HH:mm:ss")}+${timeZone_value}`;
-  console.log("s----", Start_time);
-  console.log("t---", Start_time_value);
+  ).format("HH:mm:ss")}${data?.timezone}`;
+  console.log("ccc---", Current_Time_value);
+
+  console.log("s---", Start_time_value);
+  console.log("e---", End_time_value);
   const get_slots = async () => {
     if (value) {
       try {
@@ -205,7 +207,7 @@ const CalenderBooking = () => {
             data?.interval
           }&bookings_per_slot=${
             data?.bookings_per_slot
-          }&timezone=+${timeZone_value}
+          }&timezone=${timeZone_value}
          ${
            value.toString().substring(0, 15) ===
            new Date().toString().substring(0, 15)

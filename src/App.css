@@ -966,3 +966,20 @@ button.react-calendar__tile.react-calendar__month-view__days__day:enabled:hover 
     height: 0px;
   }
 } */
+.react-calendar__year-view__months__month {
+  background-color: #959595 !important;
+  border-radius: 5px;
+}
+.react-calendar__year-view__months__month abbr::before {
+  display: none;
+}
+
+.react-calendar__decade-view__years__year {
+  flex: 0 0 30.33% !important;
+  margin: 0 2px !important;
+  background-color: none !important;
+}
+.react-calendar__tile--hasActive {
+  color: #2d2d2d;
+  font-weight: 500;
+}
