@@ -5,6 +5,7 @@ import nameIcon from "../assets/ID CARD.svg";
 import phoneIcon from "../assets/Phone_Call_4_.svg";
 import websiteIcon from "../assets/internet (1).svg";
 import calenderIcon from "../assets/calendar.svg";
+import homeIcon from "../assets/help_center_desc_home.svg";
 
 import useWindowSize from "react-use/lib/useWindowSize";
 import Confetti from "react-confetti";
@@ -45,7 +46,8 @@ const Thanku = () => {
       <div className="wrapper">
         <div className="back-arrow">
           <a href="https://www.smatbot.com/">
-            <BiArrowBack style={{ fontSize: "21px" }} />
+            {/* <BiArrowBack style={{ fontSize: "21px" }} /> */}
+            <img src={homeIcon} alt="" width={"20px"} />
             <span>Home</span>
           </a>
         </div>

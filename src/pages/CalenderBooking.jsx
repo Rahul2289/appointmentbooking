@@ -411,12 +411,17 @@ const CalenderBooking = () => {
             onChange={onChange}
             value={value}
             minDate={data?.date_range[0] === "a" ? new Date() : min_date}
-            tileDisabled={({ date, view }) =>
-              view === "month" &&
-              // block_days.some((weak) => date.getDay() === weak)
-              block_days.some((weak) =>
-                weak === 7 ? date.getDay() === 0 : date.getDay() === weak
-              )
+            tileDisabled={
+              ({ date, view }) =>
+                view === "month" &&
+                // block_days.some((weak) => date.getDay() === weak)
+                block_days.some((weak) =>
+                  weak === 7 ? date.getDay() === 0 : date.getDay() === weak
+                )
+              //   ||
+              // (date.getFullYear() === new Date(2022, 11, 25).getFullYear() &&
+              //   date.getMonth() === new Date(2022, 11, 25).getMonth() &&
+              //   date.getDate() === new Date(2022, 11, 25).getDate())
             }
             maxDate={data?.date_range[0] === "b" ? new Date() : max_date}
           />
