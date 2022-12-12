@@ -154,19 +154,7 @@ export const available_timezones_shedular = [
   },
 ];
 
-export const timeings = [
-  "09:00 am",
-  "10:00 am",
-  "11:00 am",
-  "12:00 pm",
-  "01:00 pm",
-  "02:00 pm",
-  "03:00 pm",
-  "04:00 pm",
-  "05:00 pm",
-  "06:00 pm",
-  "06:30 pm",
-];
+export const nameRegex = /^[a-zA-Z ]{2,30}$/;
 export const emailRegex =
   /^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,4})$/;
 export const urlRegEx =

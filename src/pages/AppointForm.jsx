@@ -7,7 +7,7 @@ import stopWatch from "../assets/Layer 2.svg";
 import videoIcon from "../assets/Layer 34.svg";
 
 import Form from "./../components/Form";
-import { emailRegex, urlRegEx } from "./../utils";
+import { nameRegex, emailRegex, urlRegEx } from "./../utils";
 import axios from "axios";
 import { useAppContext } from "../context/context";
 import { useOutsideClick } from "./../components/WIthClickOutSIde";
@@ -151,10 +151,13 @@ function AppointForm({
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (userData.name.length >= 3) {
+    if (
+      userData.name.length >= 3 &&
+      nameRegex.test(userData.name.toLowerCase())
+    ) {
       if (emailRegex.test(userData.email.toLowerCase())) {
         if (isValidPhoneNumber(`${number?.dialCode}${mobile}`)) {
-          if (userData.companyUrl.trim().match(urlRegEx)) {
+          if (userData.companyUrl.trim().toLowerCase().match(urlRegEx)) {
             if (userData.companyName.length > 3) {
               setLoading(true);
               post_Form_data();
@@ -246,6 +249,7 @@ function AppointForm({
             handleChange={handleChange}
             userData={userData}
             error={error}
+            nameRegex={nameRegex}
             emailRegex={emailRegex}
             number={number}
             urlRegEx={urlRegEx}

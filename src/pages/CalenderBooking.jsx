@@ -7,7 +7,7 @@ import manIcon from "../assets/man (4).svg";
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
 
-import { available_timezones_shedular, timeings } from "./../utils";
+import { available_timezones_shedular } from "./../utils";
 
 import moment from "moment-timezone";
 

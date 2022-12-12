@@ -1004,3 +1004,6 @@ button.react-calendar__tile.react-calendar__month-view__days__day:enabled:hover 
 /* react-calendar__month-view__days__day {
   color: #2d2d2d !important;
 } */
+.select-search-container {
+  --select-search-background: #fff !important;
+}

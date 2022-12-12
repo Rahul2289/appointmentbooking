@@ -30,6 +30,7 @@ const Form = (props) => {
     handleChange,
     userData,
     error,
+    nameRegex,
     emailRegex,
     number,
     urlRegEx,
@@ -107,7 +108,10 @@ const Form = (props) => {
     <form onSubmit={handleSubmit}>
       <div
         className={`form-section ${
-          userData.name.length >= 3 ? "green-border" : "normal-border"
+          userData.name.length >= 3 &&
+          nameRegex.test(userData.name.toLowerCase())
+            ? "green-border"
+            : "normal-border"
         } ${error === "nameErr" ? "red-border" : "normal-border"} `}
       >
         <div className="input-form">Name</div>
@@ -121,15 +125,16 @@ const Form = (props) => {
           value={userData.name}
           required
         />
-        {userData.name.length >= 3 && (
-          <img
-            src={checkedIcon}
-            alt=""
-            width="18px"
-            height="18px"
-            className="m-l-auto m-r-5"
-          />
-        )}
+        {userData.name.length >= 3 &&
+          nameRegex.test(userData.name.toLowerCase()) && (
+            <img
+              src={checkedIcon}
+              alt=""
+              width="18px"
+              height="18px"
+              className="m-l-auto m-r-5"
+            />
+          )}
       </div>
       <div
         className={`form-section ${
@@ -275,7 +280,7 @@ const Form = (props) => {
       </div>
       <div
         className={`form-section ${
-          userData.companyUrl.trim().match(urlRegEx)
+          userData.companyUrl.trim().toLowerCase().match(urlRegEx)
             ? "green-border"
             : "normal-border"
         } ${error === "urlErr" ? "red-border" : "normal-border"}`}
@@ -291,7 +296,7 @@ const Form = (props) => {
           value={userData.companyUrl}
           required
         />
-        {userData.companyUrl.trim().match(urlRegEx) && (
+        {userData.companyUrl.trim().toLowerCase().match(urlRegEx) && (
           <img
             src={checkedIcon}
             alt=""
