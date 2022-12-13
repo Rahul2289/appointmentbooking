@@ -93,11 +93,9 @@ const Form = (props) => {
               .join("")
               .toLowerCase()
               .includes(flagsearchValue.toLowerCase())
-          : Object.values(item.dialCode)
-              .join("")
-
-              .includes(flagsearchValue);
+          : Object.values(item.dialCode).join("").includes(flagsearchValue);
       });
+
       setFilteredResults(filteredData);
     } else {
       setFilteredResults(countries);
