@@ -376,11 +376,10 @@ const CalenderBooking = () => {
 
         conformed_booking();
 
-        // setTimeout(() => {
-        //   navigate('/ThankYou.html');
-
-        //   setLoading(false);
-        // }, 500);
+        setTimeout(() => {
+          window.open('../../thankYou.html', '_self');
+          setLoading(false);
+        }, 500);
       } catch (error) {
         console.log(error);
       }
@@ -518,7 +517,7 @@ const CalenderBooking = () => {
 
           <div className='under-line'></div>
           <a
-            href='../../thankYou.html'
+            // href='../../thankYou.html'
             className='sheadule-btn'
             type='submit'
             onClick={handleBookTheSlot}
@@ -534,7 +533,7 @@ const CalenderBooking = () => {
                 colors={['#ffff', '#ffff', '#ffff', '#ffff', '#ffff']}
               />
             )}
-            <span>Looks Good! Schedule it.</span>
+            <span class='f-s-14'>Looks Good! Schedule it.</span>
           </a>
         </div>
       </div>
