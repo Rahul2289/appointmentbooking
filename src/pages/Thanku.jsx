@@ -12,8 +12,6 @@ import Confetti from 'react-confetti';
 
 import { useAppContext } from '../context/context';
 
-import { useNavigate } from 'react-router-dom';
-
 import { BiArrowBack } from 'react-icons/bi';
 const Thanku = () => {
   const { width, height } = useWindowSize();
@@ -34,17 +32,18 @@ const Thanku = () => {
     setmobile,
   } = useAppContext();
 
-  console.log('----------', Booked_Date);
-  // const navigate = useNavigate();
-
   const Data = localStorage.getItem('userData')
     ? JSON.parse(localStorage.getItem('userData'))
     : [];
   const BookedDate = localStorage.getItem('BOOKEDDATE')
     ? JSON.parse(localStorage.getItem('BOOKEDDATE'))
     : '';
+
   console.log(BookedDate);
   console.log(Data);
+  if (!localStorage.getItem('BOOKEDDATE')) {
+    window.open('https://demo.smatbot.com/', '_self');
+  }
   const [email, setEmail] = useState(Data?.email);
   const handleSignUp = () => {
     localStorage.removeItem('userData');
