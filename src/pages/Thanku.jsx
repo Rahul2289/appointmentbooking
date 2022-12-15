@@ -39,8 +39,6 @@ const Thanku = () => {
     ? JSON.parse(localStorage.getItem('BOOKEDDATE'))
     : '';
 
-  console.log(BookedDate);
-  console.log(Data);
   if (!localStorage.getItem('BOOKEDDATE')) {
     window.open('https://demo.smatbot.com/', '_self');
   }

@@ -5,7 +5,7 @@ import profileIcon from '../assets/icons8-administrator-male-48.png';
 import manIcon from '../assets/man (4).svg';
 
 import Calendar from 'react-calendar';
-import 'react-calendar/dist/Calendar.css';
+// import 'react-calendar/dist/Calendar.css';
 
 import { available_timezones_shedular } from './../utils';
 
@@ -40,6 +40,8 @@ const CalenderBooking = () => {
     setBooked_date,
     standardTimeing,
     setStandardTimeing,
+    disable,
+    setdisable,
   } = useAppContext();
 
   console.log(Cal_Data.length);
@@ -221,6 +223,7 @@ const CalenderBooking = () => {
         setTime_slots(res.data?.data);
         setTimer_loader(false);
         setTimeing('00:00 PM');
+        setdisable(true);
       } catch (error) {
         console.log(error);
       }
@@ -247,6 +250,7 @@ const CalenderBooking = () => {
         setTime_slots(res.data?.data);
         setTimer_loader(false);
         setTimeing('00:00 PM');
+        setdisable(true);
       } catch (error) {
         console.log(error);
       }
@@ -282,6 +286,11 @@ const CalenderBooking = () => {
     // setTimeing(checked ? e.target.textContent : "00:00 PM");
     setTimeing(e.target.textContent);
   };
+  useEffect(() => {
+    if (timeing != '00:00 PM') {
+      setdisable(false);
+    }
+  }, [timeing]);
 
   useEffect(() => {
     if (standardTimeing) {
@@ -451,7 +460,7 @@ const CalenderBooking = () => {
         </div>
         <div className='right'>
           <p className='m-b-20 f-s-12 f-s-14 f-w-600'>
-            Select the time and then click on confirm.
+            Select the time and then click on Schedule.
           </p>
 
           <h5 className='f-s-12 f-s-14 f-w-600 m-b-20'>
@@ -516,9 +525,9 @@ const CalenderBooking = () => {
           </div>
 
           <div className='under-line'></div>
-          <a
+          <button
             // href='../../thankYou.html'
-            className='sheadule-btn'
+            className={` ${disable ? `btndisable` : 'sheadule-btn'}`}
             type='submit'
             onClick={handleBookTheSlot}
           >
@@ -534,7 +543,7 @@ const CalenderBooking = () => {
               />
             )}
             <span class='f-s-14'>Looks Good! Schedule it.</span>
-          </a>
+          </button>
         </div>
       </div>
       <ToastContainer />

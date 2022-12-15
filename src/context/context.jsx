@@ -1,9 +1,10 @@
-import React, { useContext, useState, useEffect } from "react";
-import axios from "axios";
+import React, { useContext, useState, useEffect } from 'react';
+import axios from 'axios';
 const AppContext = React.createContext();
 
 export const AppProvider = ({ children }) => {
   const [loading, setLoading] = useState(false);
+  const [disable, setdisable] = useState(true);
   // const [number, setNumber] = useState({
   //   dialCode: "",
   //   flag: "",
@@ -11,20 +12,20 @@ export const AppProvider = ({ children }) => {
   //   name: "",
   // });
   const [number, setNumber] = useState({
-    dialCode: "+91",
-    flag: "https://cdn.kcak11.com/CountryFlags/countries/in.svg",
-    isoCode: "IN",
-    name: "India",
+    dialCode: '+91',
+    flag: 'https://cdn.kcak11.com/CountryFlags/countries/in.svg',
+    isoCode: 'IN',
+    name: 'India',
   });
-  const [mobile, setmobile] = useState("");
-  const [error, setError] = useState("");
+  const [mobile, setmobile] = useState('');
+  const [error, setError] = useState('');
   const [userData, setUserData] = useState({
-    name: "",
-    email: "",
-    companyUrl: "",
-    companyName: "",
+    name: '',
+    email: '',
+    companyUrl: '',
+    companyName: '',
   });
-  const [initialCountryFlag, setInitialCountryFlag] = useState("in");
+  const [initialCountryFlag, setInitialCountryFlag] = useState('in');
   const [Cal_Data, setCal_Data] = useState([]);
   const [dropDownSelect, setDropDownSelect] = useState(false);
   // const [Cal_Data, setCal_Data] = useState(
@@ -40,12 +41,12 @@ export const AppProvider = ({ children }) => {
   const [standardTimeing, setStandardTimeing] = useState(
     `(GMT+05:30) IST, New Delhi `
   );
-  const [boooked_date, setBooked_date] = useState("");
-  const [flagsearchValue, setFlagSearchValue] = useState("");
+  const [boooked_date, setBooked_date] = useState('');
+  const [flagsearchValue, setFlagSearchValue] = useState('');
   const fetchCountries = async () => {
     try {
       const data = await axios.get(
-        "https://gist.githubusercontent.com/kcak11/4a2f22fb8422342b3b3daa7a1965f4e4/raw/2cc0fcb49258c667f1bc387cfebdfd3a00c4a3d5/countries.json"
+        'https://gist.githubusercontent.com/kcak11/4a2f22fb8422342b3b3daa7a1965f4e4/raw/2cc0fcb49258c667f1bc387cfebdfd3a00c4a3d5/countries.json'
       );
       setcountries(data.data);
     } catch (error) {
@@ -56,7 +57,7 @@ export const AppProvider = ({ children }) => {
     let indiaCountry = {};
     let unitedCountry = {};
     let americaCountry = {};
-    let filterIndia = countries.filter((res) => res.name === "India");
+    let filterIndia = countries.filter((res) => res.name === 'India');
     filterIndia.map((data) => {
       indiaCountry.name = data.name;
       indiaCountry.dialCode = data.dialCode;
@@ -64,7 +65,7 @@ export const AppProvider = ({ children }) => {
       indiaCountry.isoCode = data.isoCode;
     });
     let filterunitedKingdom = countries.filter(
-      (res) => res.name === "United Kingdom"
+      (res) => res.name === 'United Kingdom'
     );
     filterunitedKingdom.map((data) => {
       unitedCountry.name = data.name;
@@ -72,7 +73,7 @@ export const AppProvider = ({ children }) => {
       unitedCountry.flag = data.flag;
       unitedCountry.isoCode = data.isoCode;
     });
-    let filteramerica = countries.filter((res) => res.name === "United States");
+    let filteramerica = countries.filter((res) => res.name === 'United States');
     filteramerica.map((data) => {
       americaCountry.name = data.name;
       americaCountry.dialCode = data.dialCode;
@@ -84,24 +85,6 @@ export const AppProvider = ({ children }) => {
     countries.unshift(indiaCountry);
   };
 
-  // useEffect(() => {
-  //   fetch_country_init();
-  // }, [countries]);
-
-  console.log(countries);
-  // useEffect(() => {
-  //   if (flagsearchValue) {
-  //     const filteredData = countries.filter((value) =>
-  //       value.name
-  //         .toLowerCase()
-  //         .trim()
-  //         .includes(flagsearchValue.toLowerCase().trim())
-  //     );
-  //     setcountries(filteredData);
-  //   } else {
-  //     fetchCountries();
-  //   }
-  // }, [flagsearchValue]);
   return (
     <AppContext.Provider
       value={{
@@ -138,6 +121,8 @@ export const AppProvider = ({ children }) => {
         setDropDownSelect,
         standardTimeing,
         setStandardTimeing,
+        disable,
+        setdisable,
       }}
     >
       {children}

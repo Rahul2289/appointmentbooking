@@ -59,7 +59,7 @@ function AppointForm({
   formData_detail_data.append('action', 'answer');
   formData_detail_data.append(
     'answer_text',
-    `{"Name":"${userData.name}","Country Code":"${number?.isoCode} ${number?.dialCode}","Phone Number":"${mobile}","Business Email":"${userData?.email}","Company Website":"${userData?.companyUrl}"}`
+    `{"Name":"${userData.name}","Country Code":"${number?.isoCode} ${number?.dialCode}","Phone Number":"${mobile}","Business Email":"${userData?.email}","Company Website":"${userData?.companyUrl}","Company name":"${userData?.companyName}"}`
   );
 
   formData_detail_data.append('cb_session', chatBotUtils_1?.cb_session);
