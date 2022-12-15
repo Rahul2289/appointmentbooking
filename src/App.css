@@ -1081,9 +1081,9 @@ button.react-calendar__tile.react-calendar__month-view__days__day:enabled:hover 
   width: 100%;
   height: 38px;
 
-  border: 1px solid #d5d5d5;
-  background-color: #d5d5d5;
-  color: #ffff;
+  border: 1px solid #465def;
+  background-color: #ffff;
+  color: #465def;
 
   border-radius: 5px;
   border: none;
