@@ -243,7 +243,12 @@ const CalenderBooking = () => {
             Start_time_value
           )}&endtime=${encodeURIComponent(End_time_value)}&interval=${
             data?.interval
-          }&bookings_per_slot=${data?.bookings_per_slot}
+          }&bookings_per_slot=${data?.bookings_per_slot} ${
+            value.toString().substring(0, 15) ===
+            new Date().toString().substring(0, 15)
+              ? `&current_time=${encodeURIComponent(Current_Time_value)}`
+              : ''
+          }
           `
         );
 
@@ -292,18 +297,18 @@ const CalenderBooking = () => {
     }
   }, [timeing]);
 
+  // useEffect(() => {
+  //   if (standardTimeing) {
+  //     get_slots_timezone()
+  //   }
+  // }, []);
   useEffect(() => {
-    if (standardTimeing) {
-      get_slots_timezone();
-    }
-  }, [standardTimeing]);
-  useEffect(() => {
-    // setTimeout(() => {
     if (value) {
       get_slots();
+    }else if(standardTimeing){
+      get_slots_timezone();
     }
-    // }, 1000);
-  }, [standardTimeing, value]);
+  }, [value]);
   console.log(next_ques?.sequence);
   console.log(value);
   const Conform_booked_Data = new FormData();
@@ -405,7 +410,14 @@ const CalenderBooking = () => {
       });
     }
   };
-
+const handleOnchangeStandardTimeing =(e)=>{
+  setStandardTimeing(e)
+  if(e){
+  get_slots_timezone()
+ 
+  }
+}
+console.log(standardTimeing);
   return (
     <div className='container'>
       <div className='wrapper'>
@@ -415,12 +427,12 @@ const CalenderBooking = () => {
           </p>
           <div className=' select-section'>
             <SelectSearch
-              // defaultValue="(GMT+05:30) Asia/Kolkata"
               value={standardTimeing}
               options={options}
-              onChange={setStandardTimeing}
+
+              onChange={handleOnchangeStandardTimeing}
               search
-              // placeholder="Search country"
+              // setStandardTimeing placeholder="Search country"
             />
             <span className='downIcon' onClick={handleDropdown}>
               {' '}
