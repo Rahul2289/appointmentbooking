@@ -391,10 +391,10 @@ const CalenderBooking = () => {
 
         conformed_booking();
 
-        // setTimeout(() => {
-        //   window.open('../../thankYou.html', '_self');
-        //   setLoading(false);
-        // }, 500);
+        setTimeout(() => {
+          window.open('../../thankYou.html', '_self');
+          setLoading(false);
+        }, 500);
       } catch (error) {
         console.log(error);
       }
