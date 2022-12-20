@@ -231,6 +231,7 @@ const CalenderBooking = () => {
   const get_slots_timezone = async (time) => {
     const timeZone_values =  time.split(' ')[0].split('T')[1].split(')')[0] ;
       console.log(timeZone_values);
+      setStandardTimeing(time)
   const Start_time_values = `${current_year}-${Month_number}-${current_Date}T00:00:00${timeZone_values}`;
   const End_time_values = `${current_year}-${Month_number}-${current_Date}T23:59:59${timeZone_values}`;
     if ( timeZone_values && timeZone_values.length>0) {
@@ -343,9 +344,9 @@ const CalenderBooking = () => {
     ?.split(' ')[0]
     ?.split('+')[1]
     ?.split(')')[0];
-  console.log(Booked_Time_Zone);
+  
   let Booked_time = `T${convertStandardTime(timeing)}:00`;
-  let Booked_date = `${current_year}-${Month_number}-${current_Date}${Booked_time}+${Booked_Time_Zone}`;
+  let Booked_date = `${current_year}-${Month_number}-${current_Date}${Booked_time}${timeZone_value}`;
 
   const booked_Data = new FormData();
   booked_Data.append('chatbot_id', 12763);
@@ -390,10 +391,10 @@ const CalenderBooking = () => {
 
         conformed_booking();
 
-        setTimeout(() => {
-          window.open('../../thankYou.html', '_self');
-          setLoading(false);
-        }, 500);
+        // setTimeout(() => {
+        //   window.open('../../thankYou.html', '_self');
+        //   setLoading(false);
+        // }, 500);
       } catch (error) {
         console.log(error);
       }
