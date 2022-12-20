@@ -193,8 +193,6 @@ const CalenderBooking = () => {
   ).format('HH:mm:ss')}${data?.timezone}`;
   console.log('ccc---', Current_Time_value);
 
-  console.log('s---', Start_time_value);
-  console.log('e---', End_time_value);
   const get_slots = async () => {
     if (value) {
       try {
@@ -230,8 +228,12 @@ const CalenderBooking = () => {
     }
   };
 
-  const get_slots_timezone = async () => {
-    if (standardTimeing) {
+  const get_slots_timezone = async (time) => {
+    const timeZone_values =  time.split(' ')[0].split('T')[1].split(')')[0] ;
+      console.log(timeZone_values);
+  const Start_time_values = `${current_year}-${Month_number}-${current_Date}T00:00:00${timeZone_values}`;
+  const End_time_values = `${current_year}-${Month_number}-${current_Date}T23:59:59${timeZone_values}`;
+    if ( timeZone_values && timeZone_values.length>0) {
       try {
         setTimer_loader(true);
         const res = await axios.get(
@@ -240,8 +242,8 @@ const CalenderBooking = () => {
           }&question_id=${next_ques?.id}&cb_session=${
             cb_section?.cb_session
           }&starttime=${encodeURIComponent(
-            Start_time_value
-          )}&endtime=${encodeURIComponent(End_time_value)}&interval=${
+            Start_time_values
+          )}&endtime=${encodeURIComponent(End_time_values)}&interval=${
             data?.interval
           }&bookings_per_slot=${data?.bookings_per_slot} ${
             value.toString().substring(0, 15) ===
@@ -301,12 +303,10 @@ const CalenderBooking = () => {
   //   if (standardTimeing) {
   //     get_slots_timezone()
   //   }
-  // }, []);
+  // }, [standardTimeing]);
   useEffect(() => {
     if (value) {
       get_slots();
-    }else if(standardTimeing){
-      get_slots_timezone();
     }
   }, [value]);
   console.log(next_ques?.sequence);
@@ -412,12 +412,11 @@ const CalenderBooking = () => {
   };
 const handleOnchangeStandardTimeing =(e)=>{
   setStandardTimeing(e)
-  if(e){
-  get_slots_timezone()
- 
+  if(e && e.length>0){
+  get_slots_timezone(e)
   }
 }
-console.log(standardTimeing);
+
   return (
     <div className='container'>
       <div className='wrapper'>
