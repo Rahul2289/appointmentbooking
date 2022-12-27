@@ -17,7 +17,7 @@ import Protected from './components/Protected';
 
 const fpPromise = FingerprintJS.load();
 function App() {
-  const [callapi, setcallapi] = useState(true)
+  
   const { Cal_Data } = useAppContext();
   const [visitorId, setVisitorId] = useState('');
   const [geopl, setGeopl] = useState([]);
@@ -33,11 +33,7 @@ function App() {
   const visitor_Loading = useRef(false);
   const geopl_Loading = useRef(false);
 
-  useEffect(() => {
-    if (window.location.href.includes('reschedule')) {
-      setcallapi(false)
-    }
-  }, [])
+
   
   
 
@@ -100,7 +96,7 @@ function App() {
   formData_detail.append('book_demo', 1);
 
   const get_ChatBot_utils = async () => {
-    if (visitorId && geopl.IPv4 && callapi) {
+    if (visitorId && geopl.IPv4 ) {
       try {
         await axios({
           method: 'POST',

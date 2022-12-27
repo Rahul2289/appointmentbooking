@@ -43,7 +43,8 @@ const CalenderBooking = () => {
     disable,
     setdisable,
     sectionID,
-     setSectionID
+     setSectionID,
+     resheaduleDate
   } = useAppContext();
 
 
@@ -474,6 +475,19 @@ const handleOnchangeStandardTimeing =(e)=>{
           </div>
         </div>
         <div className='right'>
+        {    (sectionID && sectionID.length>0)  && 
+        <> 
+        <div className='formetTimer'>
+            <h6>Former Time</h6>
+            <div className= 'row'>
+              <img src={calenderIcon} alt="" />
+              <h6> {  resheaduleDate}</h6>
+            </div>
+          </div>
+          <div className='under-line'></div>
+          </> 
+          }
+          
           <p className='m-b-20 f-s-12 f-s-14 f-w-600'>
             Select the time and then click on Schedule.
           </p>
@@ -541,7 +555,6 @@ const handleOnchangeStandardTimeing =(e)=>{
 
           <div className='under-line'></div>
           <button
-            // href='../../thankYou.html'
             className={` ${disable ? `btndisable` : 'sheadule-btn'}`}
             type='submit'
             onClick={handleBookTheSlot}

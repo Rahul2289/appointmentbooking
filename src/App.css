@@ -30,7 +30,7 @@ a {
   display: flex;
   flex-direction: row;
 
-  padding: 25px 0;
+  padding: 15px 0;
 }
 .left-calender {
   width: 50%;
@@ -77,7 +77,7 @@ a {
 .container .wrapper .right {
   width: 50%;
 
-  padding: 30px;
+  padding: 25px 30px;
 }
 .container .wrapper .right .form-section {
   /* border: 1px solid #e1e4f8; */
@@ -117,7 +117,7 @@ input[type='search']::placeholder {
   border: none;
   outline: none;
   width: 75%;
-
+background: transparent;
   color: #7272ab;
   font-family: 'Rubik', sans-serif;
 }
@@ -496,7 +496,6 @@ button.react-calendar__tile.react-calendar__month-view__days__day:enabled:hover 
 .under-line {
   border: 1px solid #e5efff;
   background-color: #e5efff;
-  margin-top: 20px;
   margin-bottom: 20px;
 }
 .sheadule-btn {
@@ -1142,30 +1141,13 @@ button.react-calendar__tile.react-calendar__month-view__days__day:enabled:hover 
   }
 }
 
-/* .ctn-preloader {
-  margin-top: calc(50vh - 22vh - 25vh);
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  cursor: default;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  height: 100%;
-  -webkit-box-pack: center;
-  -ms-flex-pack: center;
-  justify-content: center;
-  left: 0;
-  top: 0;
-  width: 100%;
-  z-index: 9000;
-} */
+
 .ctn-preloader1 {
   margin-top: calc(50vh - 10vh - 25vh);
   position: none !important;
 }
 
 .ctn-preloader {
-  /* margin-top: calc(50vh - 22vh - 25vh); */
   -webkit-box-align: center;
   -ms-flex-align: center;
   align-items: center;
@@ -1361,4 +1343,27 @@ button.react-calendar__tile.react-calendar__month-view__days__day:enabled:hover 
   -webkit-transition: 0.7s 0.3s allcubic-bezier(0.1, 0.1, 0.1, 1);
   -o-transition: 0.7s 0.3s allcubic-bezier(0.1, 0.1, 0.1, 1);
   transition: 0.7s 0.3s allcubic-bezier(0.1, 0.1, 0.1, 1);
+}
+.formetTimer{
+  padding: 10px 20px;
+  background: #f34b4b;
+  border-radius: 5px;
+}
+.formetTimer h6{
+  font-size: 14px;
+  margin-bottom: 10px;
+  color: #ffff;
+}
+.formetTimer .row{
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+.formetTimer .row img{
+  width: 16px;
+}
+.formetTimer .row h6{
+  font-size: 11px;
+  color: #fff;
+  margin: 0px;
 }

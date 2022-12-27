@@ -28,6 +28,7 @@ export const AppProvider = ({ children }) => {
   const [Time_slots, setTime_slots] = useState([]);
   const [value, onChange] = useState(new Date());
   const [sectionID, setSectionID] = useState('');
+  const [resheaduleDate, setresheaduleDate] = useState('');
   const [standardTimeing, setStandardTimeing] = useState(
     `(GMT+05:30) IST, New Delhi `
   );
@@ -84,7 +85,9 @@ export const AppProvider = ({ children }) => {
         disable,
         setdisable,
         sectionID,
-         setSectionID
+         setSectionID,
+         resheaduleDate,
+          setresheaduleDate
       }}
     >
       {children}

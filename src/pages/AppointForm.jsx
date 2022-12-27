@@ -43,7 +43,7 @@ function AppointForm({
     countries,
     setcountries,
     setDropDownSelect,
-    sectionID, setSectionID
+    sectionID, setSectionID,setresheaduleDate
   } = useAppContext();
 
   const navigate = useNavigate();
@@ -243,7 +243,7 @@ setSectionID(SECTIONID)
         isoCode: res['Country Code'].split(' ')[0]
       })
       setnext_ques(data.data.qna_prev[data.data.qna_prev.length-1])
-       
+      setresheaduleDate(data.data.qna_prev[data.data.qna_prev.length-1].answer_text)
     
       } catch (error) {
         console.log(error);
