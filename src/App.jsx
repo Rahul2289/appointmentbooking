@@ -17,6 +17,7 @@ import Protected from './components/Protected';
 
 const fpPromise = FingerprintJS.load();
 function App() {
+  const [callapi, setcallapi] = useState(true)
   const { Cal_Data } = useAppContext();
   const [visitorId, setVisitorId] = useState('');
   const [geopl, setGeopl] = useState([]);
@@ -31,6 +32,14 @@ function App() {
 
   const visitor_Loading = useRef(false);
   const geopl_Loading = useRef(false);
+
+  useEffect(() => {
+    if (window.location.href.includes('reschedule')) {
+      setcallapi(false)
+    }
+  }, [])
+  
+  
 
   useEffect(() => {
     if (visitor_Loading.current === false) {
@@ -68,16 +77,18 @@ function App() {
   formData_init.append('chatbot_id', 12763);
 
   useEffect(() => {
-    try {
-      fetch('https://www.smatbot.com/kya_backend/pagehub/chatbot_utils', {
-        method: 'POST',
-        body: formData_init,
-      })
-        .then((res) => res.json())
-        .then((data) => setSheet_id(data?.chatbot_details[0].spreadsheet_id));
-    } catch (error) {
-      console.log(error);
-    }
+ 
+      try {
+        fetch('https://www.smatbot.com/kya_backend/pagehub/chatbot_utils', {
+          method: 'POST',
+          body: formData_init,
+        })
+          .then((res) => res.json())
+          .then((data) => setSheet_id(data?.chatbot_details[0].spreadsheet_id));
+      } catch (error) {
+        console.log(error);
+      }
+    
   }, []);
 
   const formData_detail = new FormData();
@@ -89,7 +100,7 @@ function App() {
   formData_detail.append('book_demo', 1);
 
   const get_ChatBot_utils = async () => {
-    if (visitorId && geopl.IPv4) {
+    if (visitorId && geopl.IPv4 && callapi) {
       try {
         await axios({
           method: 'POST',
@@ -128,7 +139,7 @@ function App() {
   formData_detail_1.append('book_demo', 1);
 
   const fetch_chatbot_utils_2 = async () => {
-    if (visitorId && geopl.IPv4) {
+    if (visitorId && geopl.IPv4 ) {
       try {
         const data = await axios({
           method: 'POST',
@@ -205,9 +216,9 @@ function App() {
         <Route
           path='/booking'
           element={
-            <Protected Cal_Data={Cal_Data}>
+            // <Protected Cal_Data={Cal_Data}>
               <CalenderBooking />
-            </Protected>
+            // </Protected>
           }
         />
         <Route path='/thankYou' element={<Thanku />} />

@@ -2,7 +2,6 @@ import { isValidPhoneNumber } from 'react-phone-number-input';
 
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-
 import stopWatch from '../assets/Layer 2.svg';
 import videoIcon from '../assets/Layer 34.svg';
 
@@ -19,9 +18,8 @@ function AppointForm({
   sheet_id,
   visitorId,
 }) {
-  const handleHeaderClick = (event) => {
-    event.stopPropagation();
-  };
+
+
   const {
     cb_section,
     Cal_Data,
@@ -44,13 +42,29 @@ function AppointForm({
     countries,
     setcountries,
     setDropDownSelect,
+    sectionID, setSectionID
   } = useAppContext();
 
   const navigate = useNavigate();
 
+  const handleHeaderClick = (event) => {
+    event.stopPropagation();
+  };
+ 
+ 
+if (window.location.href.includes('reschedule')) {
+let action = window.location.href.split('action=')[1]
+let SECTIONID = action.split('=')[1]
+setSectionID(SECTIONID)
+}
+
+
+
   useEffect(() => {
     fetchCountries();
   }, []);
+
+
   const handleChange = (e) => {
     setUserData({ ...userData, [e.target.name]: e.target.value });
   };
@@ -81,10 +95,6 @@ function AppointForm({
           headers: { 'Content-Type': 'multipart/form-data' },
         });
         setCal_Data(data?.data?.next_question[0]?.default_options);
-        // localStorage.setItem(
-        //   "CalData",
-        //   data?.data?.next_question[0]?.default_options
-        // );
         setCb_section(data?.data);
         setnext_ques(data?.data?.next_question[0]);
       } catch (error) {
@@ -200,6 +210,55 @@ function AppointForm({
       }, 1500);
     }
   }, [Cal_Data, cb_section]);
+
+
+
+  const reshudle_detail_data = new FormData();
+  reshudle_detail_data.append('bot_id', 12763);
+  reshudle_detail_data.append('session_id', sectionID);
+
+  const reshudle_demo = async () => {
+    if (sectionID && sectionID.length>0) {
+      try {
+        const data = await axios({
+          method: 'POST',
+          url: 'https://www.smatbot.com/kya_backend/singleChatEmailView/singleChatView',
+          data: reshudle_detail_data,
+          headers: { 'Content-Type': 'multipart/form-data' },
+        });
+        navigate('/booking');
+     let res = JSON.parse(data.data.qna_prev[0].answer_text)
+     let response = data.data.qna_prev[data.data.qna_prev.length-1].default_options
+      setCal_Data(response)
+      setUserData({
+        name: res.Name,
+        email: res['Business Email'],
+        companyUrl: res['Company Website'],
+        companyName: res['Company name'],
+      })
+      setmobile(res['Phone Number'])
+      setNumber({
+        dialCode: res['Country Code'].split(' ')[1],
+        isoCode: res['Country Code'].split(' ')[0]
+      })
+      setnext_ques(data.data.qna_prev[data.data.qna_prev.length-1])
+       
+    
+      } catch (error) {
+        console.log(error);
+      }
+    }
+  };
+  
+
+
+
+
+  useEffect(() => {
+    if ( sectionID.length>0 ) {
+      reshudle_demo()
+    }
+  }, [next_question?.id])
 
   return (
     <div className='container' onClick={handleHeaderClick}>

@@ -42,14 +42,15 @@ const CalenderBooking = () => {
     setStandardTimeing,
     disable,
     setdisable,
+    sectionID,
+     setSectionID
   } = useAppContext();
 
-  console.log(Cal_Data.length);
-  console.log(cb_section);
-  let data = Cal_Data ? JSON.parse(Cal_Data) : {};
+
+  let data = (Cal_Data && Cal_Data.length > 0 )? JSON.parse(Cal_Data) : {};
   useEffect(() => {
     try {
-      if (cb_section.length === 0) {
+      if (cb_section.length === 0 && sectionID.length === 0 ) {
         navigate('/');
       }
     } catch (error) {
@@ -57,10 +58,12 @@ const CalenderBooking = () => {
     }
   }, []);
 
-  console.log(data);
+ 
   //date range
-  let min_date = data?.date_range[0];
-  let max_date = data?.date_range[1];
+  let min_date = 0;
+  let max_date = 25;
+   min_date = data?.date_range[0]  ;
+   max_date = data?.date_range[1];
   let current_date = new Date();
   let show_def_date;
   if (data?.date_range[0] == 'a') {
@@ -199,9 +202,9 @@ const CalenderBooking = () => {
         setTimer_loader(true);
         const res = await axios.get(
           `https://www.smatbot.com/kya_backend/pagehub/getSlots?chatbot_id=${
-            next_ques?.chatbot_id
-          }&question_id=${next_ques?.id}&cb_session=${
-            cb_section?.cb_session
+            next_ques?.chatbot_id ? next_ques?.chatbot_id :  12763
+          }&question_id=${next_ques?.id ? next_ques?.id : 580881}&cb_session=${
+            cb_section.cb_session ?  cb_section.cb_session : sectionID
           }&starttime=${encodeURIComponent(
             Start_time_value
           )}&endtime=${encodeURIComponent(End_time_value)}&interval=${
@@ -239,10 +242,10 @@ const CalenderBooking = () => {
         setTimer_loader(true);
         const res = await axios.get(
           `https://www.smatbot.com/kya_backend/pagehub/getSlots?chatbot_id=${
-            next_ques?.chatbot_id
-          }&question_id=${next_ques?.id}&cb_session=${
-            cb_section?.cb_session
-          }&starttime=${encodeURIComponent(
+          next_ques?.chatbot_id ? next_ques?.chatbot_id :  12763
+        }&question_id=${next_ques?.id ? next_ques?.id : 580881}&cb_session=${
+          cb_section.cb_session ?  cb_section.cb_session : sectionID
+        }&starttime=${encodeURIComponent(
             Start_time_values
           )}&endtime=${encodeURIComponent(End_time_values)}&interval=${
             data?.interval
@@ -318,7 +321,7 @@ const CalenderBooking = () => {
     'answer_text',
     `${current_Date} ${current_month} ${current_year} at ${timeing}`
   );
-  Conform_booked_Data.append('cb_session', cb_section?.cb_session);
+  Conform_booked_Data.append('cb_session', cb_section.cb_session ?  cb_section.cb_session : sectionID);
   Conform_booked_Data.append('question_id', next_ques.id);
   Conform_booked_Data.append('is_logical', 1);
   Conform_booked_Data.append('sequence', next_ques?.sequence);
@@ -350,7 +353,7 @@ const CalenderBooking = () => {
 
   const booked_Data = new FormData();
   booked_Data.append('chatbot_id', 12763);
-  booked_Data.append('cb_session', cb_section?.cb_session);
+  booked_Data.append('cb_session', cb_section.cb_session ?  cb_section.cb_session : sectionID);
   booked_Data.append('question_id', next_ques?.id);
   booked_Data.append('time', Booked_date);
 
@@ -554,7 +557,7 @@ const handleOnchangeStandardTimeing =(e)=>{
                 colors={['#ffff', '#ffff', '#ffff', '#ffff', '#ffff']}
               />
             )}
-            <span class='f-s-14'>Looks Good! Schedule it.</span>
+            <span className='f-s-14'>Looks Good! Schedule it.</span>
           </button>
         </div>
       </div>

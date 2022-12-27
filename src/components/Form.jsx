@@ -40,17 +40,6 @@ const Form = (props) => {
   useEffect(() => {
     countries.filter((data) => {
       if (data.isoCode === geopl.country_code) {
-        console.log(data.isoCode === geopl.country_code);
-        console.log("country", data.isoCode);
-        console.log("geopl", geopl.country_code);
-        // setNumber({
-        //   dialCode: data.dialCode ? data.dialCode : "+91",
-        //   flag: data.flag
-        //     ? data.flag
-        //     : "https://cdn.kcak11.com/CountryFlags/countries/in.svg",
-        //   isoCode: data.isoCode ? data.isoCode : "IN",
-        //   name: data.name ? data.name : "India",
-        // });
         setInitialCountryFlag(data.isoCode.toLowerCase());
         setNumber({
           dialCode: data.dialCode,

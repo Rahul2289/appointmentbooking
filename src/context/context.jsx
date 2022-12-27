@@ -5,12 +5,6 @@ const AppContext = React.createContext();
 export const AppProvider = ({ children }) => {
   const [loading, setLoading] = useState(false);
   const [disable, setdisable] = useState(true);
-  // const [number, setNumber] = useState({
-  //   dialCode: "",
-  //   flag: "",
-  //   isoCode: "",
-  //   name: "",
-  // });
   const [number, setNumber] = useState({
     dialCode: '+91',
     flag: 'https://cdn.kcak11.com/CountryFlags/countries/in.svg',
@@ -28,16 +22,12 @@ export const AppProvider = ({ children }) => {
   const [initialCountryFlag, setInitialCountryFlag] = useState('in');
   const [Cal_Data, setCal_Data] = useState([]);
   const [dropDownSelect, setDropDownSelect] = useState(false);
-  // const [Cal_Data, setCal_Data] = useState(
-  //   localStorage.getItem("CalData")
-  //     ? JSON.parse(localStorage.getItem("CalData"))
-  //     : {}
-  // );
   const [countries, setcountries] = useState([]);
   const [cb_section, setCb_section] = useState([]);
   const [next_ques, setnext_ques] = useState([]);
   const [Time_slots, setTime_slots] = useState([]);
   const [value, onChange] = useState(new Date());
+  const [sectionID, setSectionID] = useState('');
   const [standardTimeing, setStandardTimeing] = useState(
     `(GMT+05:30) IST, New Delhi `
   );
@@ -53,37 +43,7 @@ export const AppProvider = ({ children }) => {
       console.log(error);
     }
   };
-  const fetch_country_init = () => {
-    let indiaCountry = {};
-    let unitedCountry = {};
-    let americaCountry = {};
-    let filterIndia = countries.filter((res) => res.name === 'India');
-    filterIndia.map((data) => {
-      indiaCountry.name = data.name;
-      indiaCountry.dialCode = data.dialCode;
-      indiaCountry.flag = data.flag;
-      indiaCountry.isoCode = data.isoCode;
-    });
-    let filterunitedKingdom = countries.filter(
-      (res) => res.name === 'United Kingdom'
-    );
-    filterunitedKingdom.map((data) => {
-      unitedCountry.name = data.name;
-      unitedCountry.dialCode = data.dialCode;
-      unitedCountry.flag = data.flag;
-      unitedCountry.isoCode = data.isoCode;
-    });
-    let filteramerica = countries.filter((res) => res.name === 'United States');
-    filteramerica.map((data) => {
-      americaCountry.name = data.name;
-      americaCountry.dialCode = data.dialCode;
-      americaCountry.flag = data.flag;
-      americaCountry.isoCode = data.isoCode;
-    });
-    countries.unshift(unitedCountry);
-    countries.unshift(americaCountry);
-    countries.unshift(indiaCountry);
-  };
+ 
 
   return (
     <AppContext.Provider
@@ -123,6 +83,8 @@ export const AppProvider = ({ children }) => {
         setStandardTimeing,
         disable,
         setdisable,
+        sectionID,
+         setSectionID
       }}
     >
       {children}
