@@ -10,6 +10,7 @@ import { nameRegex, emailRegex, urlRegEx } from './../utils';
 import axios from 'axios';
 import { useAppContext } from '../context/context';
 import { useOutsideClick } from './../components/WIthClickOutSIde';
+import Loader from './../components/Loader';
 
 function AppointForm({
   geopl,
@@ -206,7 +207,7 @@ setSectionID(SECTIONID)
     if (Cal_Data.length > 0 && cb_section) {
       setTimeout(() => {
         setLoading(false);
-        navigate('/booking');
+         navigate('/booking');
       }, 1500);
     }
   }, [Cal_Data]);
@@ -262,7 +263,8 @@ setSectionID(SECTIONID)
 
   return (
     <div className='container' onClick={handleHeaderClick}>
-       {window.location.href.includes('reschedule') ? <> <h1>loading...</h1> </> : <>      <div className='wrapper'>
+       {window.location.href.includes('reschedule') ? <> <Loader/> </> : <> 
+       <div className='wrapper'>
         <div className='left'>
           <p className='m-b-10 text-color-lightblue-1  f-w-600 f-s-14  f-s-18'>
             SmatBot

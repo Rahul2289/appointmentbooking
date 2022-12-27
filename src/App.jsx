@@ -216,9 +216,9 @@ function App() {
         <Route
           path='/booking'
           element={
-            // <Protected Cal_Data={Cal_Data}>
+             <Protected Cal_Data={Cal_Data}>
               <CalenderBooking />
-            // </Protected>
+             </Protected>
           }
         />
         <Route path='/thankYou' element={<Thanku />} />
