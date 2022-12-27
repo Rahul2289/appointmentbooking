@@ -209,7 +209,7 @@ setSectionID(SECTIONID)
         navigate('/booking');
       }, 1500);
     }
-  }, [Cal_Data, cb_section]);
+  }, [Cal_Data]);
 
 
 
@@ -226,8 +226,8 @@ setSectionID(SECTIONID)
           data: reshudle_detail_data,
           headers: { 'Content-Type': 'multipart/form-data' },
         });
-        navigate('/booking');
-     let res = JSON.parse(data.data.qna_prev[0].answer_text)
+      
+     let res = JSON.parse(data.data.qna_prev[0].answer_text) 
      let response = data.data.qna_prev[data.data.qna_prev.length-1].default_options
       setCal_Data(response)
       setUserData({
@@ -262,7 +262,7 @@ setSectionID(SECTIONID)
 
   return (
     <div className='container' onClick={handleHeaderClick}>
-      <div className='wrapper'>
+       {window.location.href.includes('reschedule') ? <> <h1>loading...</h1> </> : <>      <div className='wrapper'>
         <div className='left'>
           <p className='m-b-10 text-color-lightblue-1  f-w-600 f-s-14  f-s-18'>
             SmatBot
@@ -322,7 +322,8 @@ setSectionID(SECTIONID)
             geopl={geopl}
           />
         </div>
-      </div>
+      </div></>}
+
     </div>
   );
 }
