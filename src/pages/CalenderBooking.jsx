@@ -44,6 +44,8 @@ const CalenderBooking = () => {
     setdisable,
     sectionID,
      setSectionID,
+     mobile,
+     userData,
      resheaduleDate
   } = useAppContext();
 
@@ -195,7 +197,7 @@ const CalenderBooking = () => {
     new Date().toLocaleTimeString().split(' '),
     'h:mm:ss A'
   ).format('HH:mm:ss')}${data?.timezone}`;
-  console.log('ccc---', Current_Time_value);
+ 
 
   const get_slots = async () => {
     if (value) {
@@ -352,8 +354,17 @@ const CalenderBooking = () => {
   let Booked_time = `T${convertStandardTime(timeing)}:00`;
   let Booked_date = `${current_year}-${Month_number}-${current_Date}${Booked_time}${timeZone_value}`;
 
+const postToGoogleSheet =async()=>{
+  try {
+    const data = await axios.get(`https://script.google.com/macros/s/AKfycbxm-Q_gTTrl6xWDfd5kDTekuLp6GICMzi2RqtL3lcz96ao2dtqO5pDGXxaTiUOwf_oEhg/exec?email=${userData.email}&mobile_number=${mobile}&slot=${current_Day}, ${current_month} ${current_Date}, ${timeing} |  ${standardTimeing && standardTimeing}&status=Rescheduled&reason=${`NA`}`)
+    console.log(data);
+  } catch (error) {
+    console.log(error);
+  }
+}
+
   const booked_Data = new FormData();
-  booked_Data.append('chatbot_id', 12763);
+  booked_Data.append('chatbot_id', next_ques?.chatbot_id ? next_ques?.chatbot_id :  12763);
   booked_Data.append('cb_session', cb_section.cb_session ?  cb_section.cb_session : sectionID);
   booked_Data.append('question_id', next_ques?.id);
   booked_Data.append('time', Booked_date);
@@ -395,11 +406,12 @@ const CalenderBooking = () => {
 
         conformed_booking();
 
-        setTimeout(() => {
-          window.open('../../thankYou.html', '_self');
-          setLoading(false);
-        }, 500);
-      } catch (error) {
+           setTimeout(() => {
+             window.open('../../thankYou.html', '_self');
+            setLoading(false);
+         }, 500);
+        postToGoogleSheet()
+        } catch (error) {
         console.log(error);
       }
     } else {

@@ -204,7 +204,7 @@ setSectionID(SECTIONID)
   };
 
   useEffect(() => {
-    if (Cal_Data.length > 0 && cb_section) {
+    if (Cal_Data?.length > 0 && cb_section) {
       setTimeout(() => {
         setLoading(false);
          navigate('/booking');
@@ -227,33 +227,38 @@ setSectionID(SECTIONID)
           data: reshudle_detail_data,
           headers: { 'Content-Type': 'multipart/form-data' },
         });
-      
-     let res = JSON.parse(data.data.qna_prev[0].answer_text) 
-     let response = data.data.qna_prev[data.data.qna_prev.length-1].default_options
+        
+     let res =(data.data.qna_prev[0].answer_text.includes('}')) ? JSON.parse(data.data.qna_prev[0].answer_text) :(data.data.qna_prev[0].answer_text)
+     let response = data.data.qna_prev[data.data.qna_prev.length-1]?.default_options
+    
       setCal_Data(response)
       setUserData({
-        name: res.Name,
-        email: res['Business Email'],
-        companyUrl: res['Company Website'],
-        companyName: res['Company name'],
+        name: (data.data.qna_prev[0]?.answer_text.includes('}')) ?  res?.Name : data.data?.qna_prev[0]?.answer_text,
+        email: (data.data.qna_prev[0]?.answer_text.includes('}')) ?  res['Business Email'] : data.data?.qna_prev[1]?.answer_text,
+        companyUrl:(data.data.qna_prev[0]?.answer_text.includes('}')) ? res['Company Website'] : data.data?.qna_prev[3]?.answer_text,
+        companyName:(data.data.qna_prev[0]?.answer_text.includes('}')) ? res['Company name'] : data.data?.qna_prev[4]?.answer_text,
       })
-      setmobile(res['Phone Number'])
+      setmobile( (data.data.qna_prev[0]?.answer_text.includes('}')) ? res['Phone Number']: data.data?.qna_prev[2]?.answer_text )
       setNumber({
-        dialCode: res['Country Code'].split(' ')[1],
-        isoCode: res['Country Code'].split(' ')[0]
+        dialCode: res['Country Code']?.split(' ')[1],
+        isoCode: res['Country Code']?.split(' ')[0]
       })
       setnext_ques(data.data.qna_prev[data.data.qna_prev.length-1])
-      setresheaduleDate(data.data.qna_prev[data.data.qna_prev.length-1].answer_text)
-    
+      setresheaduleDate(data.data?.qna_prev[data.data.qna_prev.length-1].answer_text)
+
       } catch (error) {
         console.log(error);
       }
     }
   };
-  
+  console.log(Cal_Data);
+  localStorage.setItem(
+    'userData',
+    JSON.stringify({ ...userData, number, mobile })
+  );
 
-
-
+  console.log(userData);
+console.log(mobile);
 
   useEffect(() => {
     if ( sectionID.length>0 ) {

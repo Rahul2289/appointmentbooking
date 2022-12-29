@@ -15,16 +15,7 @@ const Loader = () => {
                 <span data-text-preloader="o" className="letters-loading">o                        </span>
                 <span data-text-preloader="t" className="letters-loading">t                        </span>
             </div>
-            <div className="txt-loading">
-                <span data-text-preloader="L" className="letters-loading">L                        </span>
-                <span data-text-preloader="o" className="letters-loading">o                        </span>
-                <span data-text-preloader="a" className="letters-loading">a                        </span>
-                <span data-text-preloader="d" className="letters-loading">d                        </span>
-                <span data-text-preloader="i" className="letters-loading">i                        </span>
-                <span data-text-preloader="n" className="letters-loading">n                        </span>
-                <span data-text-preloader="g" className="letters-loading">g                        </span>
-            </div>
-        </div>
+                   </div>
         <div className="loader">
             <div className="row">
                 <div className="col-lg-3 loader-section section-left">
