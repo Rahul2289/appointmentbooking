@@ -410,7 +410,10 @@ const postToGoogleSheet =async()=>{
              window.open('../../thankYou.html', '_self');
             setLoading(false);
          }, 500);
-        postToGoogleSheet()
+         if (sectionID.length>0) {
+          postToGoogleSheet()
+         }
+       
         } catch (error) {
         console.log(error);
       }
