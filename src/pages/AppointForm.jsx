@@ -53,7 +53,7 @@ function AppointForm({
   };
  
  
-if (window.location.href.includes('reschedule')) {
+if (window.location.href.includes('Rescheduled')) {
 let action = window.location.href.split('action=')[1]
 let SECTIONID = action.split('=')[1]
 setSectionID(SECTIONID)
@@ -268,7 +268,7 @@ console.log(mobile);
 
   return (
     <div className='container' onClick={handleHeaderClick}>
-       {window.location.href.includes('reschedule') ? <> <Loader/> </> : <> 
+       {window.location.href.includes('Rescheduled') ? <> <Loader/> </> : <> 
        <div className='wrapper'>
         <div className='left'>
           <p className='m-b-10 text-color-lightblue-1  f-w-600 f-s-14  f-s-18'>
