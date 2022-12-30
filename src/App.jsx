@@ -35,7 +35,7 @@ function App() {
 
 
   
-  
+/* ------------------------------GETTING VISITOR ID FROM FINGEpRRINT.JS------------------------------------- */  
 
   useEffect(() => {
     if (visitor_Loading.current === false) {
@@ -52,6 +52,7 @@ function App() {
     };
   }, []);
 
+  /* ------------------------------GETTING LOCATINON , IPv4 , country_code------------------------------------- */  
   useEffect(() => {
     if (geopl_Loading.current === false) {
       try {
@@ -68,6 +69,8 @@ function App() {
     };
   }, []);
 
+
+    /* ------------------------------ACTION = read_cb_by_id AND GETTING spreadsheet_id------------------------------------- */  
   let formData_init = new FormData();
   formData_init.append('action', 'read_cb_by_id');
   formData_init.append('chatbot_id', 12763);
@@ -87,6 +90,7 @@ function App() {
     
   }, []);
 
+   /* ------------------------------ACTION = init_chat AND pOSTING device_print------------------------------------- */  
   const formData_detail = new FormData();
   formData_detail.append('action', 'init_chat');
   formData_detail.append('device_print', `${visitorId}_landing`);
@@ -116,6 +120,8 @@ function App() {
     }
   }, [visitorId, geopl.IPv4]);
 
+
+     /* ------------------------------ACTION = init_chat AND pOSTING device_print AND source------------------------------------- */  
   const formData_detail_1 = new FormData();
   formData_detail_1.append('action', 'init_chat');
   formData_detail_1.append('device_print', `${visitorId}_landing`);
@@ -154,7 +160,7 @@ function App() {
   useEffect(() => {
     fetch_chatbot_utils_2();
   }, [geopl.IPv4, visitorId]);
-
+     /* ------------------------------ACTION = answer ------------------------------------- */ 
   const formData_detail_2 = new FormData();
   formData_detail_2.append('action', 'answer');
   formData_detail_2.append('chatbot_id', Init_question.chatbot_id);

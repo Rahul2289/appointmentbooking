@@ -1,7 +1,8 @@
 import { isValidPhoneNumber } from 'react-phone-number-input';
 
 import { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate,useSearchParams } from 'react-router-dom';
+
 import stopWatch from '../assets/Layer 2.svg';
 import videoIcon from '../assets/Layer 34.svg';
 
@@ -12,38 +13,13 @@ import { useAppContext } from '../context/context';
 import { useOutsideClick } from './../components/WIthClickOutSIde';
 import Loader from './../components/Loader';
 
-function AppointForm({
-  geopl,
-  chatBotUtils_1,
-  next_question,
-  sheet_id,
-  visitorId,
-}) {
+
+function AppointForm({geopl,chatBotUtils_1,next_question,sheet_id,visitorId,}) {
 
 
-  const {
-    cb_section,
-    Cal_Data,
-    loading,
-    setLoading,
-    number,
-    setNumber,
-    error,
-    setError,
-    userData,
-    setUserData,
-    setCal_Data,
-    setCb_section,
-    setnext_ques,
-    mobile,
-    setmobile,
-    fetchCountries,
-    flagsearchValue,
-    setFlagSearchValue,
-    countries,
-    setcountries,
-    setDropDownSelect,
-    sectionID, setSectionID,setresheaduleDate
+  const {cb_section,Cal_Data,loading,setLoading,number,setNumber,error,setError,userData,setUserData,setCal_Data,setCb_section,setnext_ques,mobile,
+    setmobile,  fetchCountries, flagsearchValue, setFlagSearchValue, countries, setcountries, setDropDownSelect, sectionID, setSectionID,setresheaduleDate,
+    chatbotid , setChatbotid
   } = useAppContext();
 
   const navigate = useNavigate();
@@ -52,24 +28,29 @@ function AppointForm({
     event.stopPropagation();
   };
  
- 
+  const [searchParams] = useSearchParams();
+
+
+  
 if (window.location.href.includes('Rescheduled')) {
-let action = window.location.href.split('action=')[1]
-let SECTIONID = action.split('=')[1]
+let SECTIONID = searchParams.get('session_id')
 setSectionID(SECTIONID)
+let CHATBOTID = searchParams.get('chatbot_id')
+setChatbotid(CHATBOTID)
 }
 
 
-
+ /* ------------------------------FETCHING COUNTERIES FOR COUNTRY CODE FOR MOBILE------------------------------------- */
   useEffect(() => {
     fetchCountries();
   }, []);
 
-
+ /* ------------------------------HANDLEING USER DETAIL ONCHANE------------------------------------- */
   const handleChange = (e) => {
     setUserData({ ...userData, [e.target.name]: e.target.value });
   };
 
+    /* ------------------------------SUBMITING THE FORM DETAILS TO BACKEND AND GETTING CALENDER DEFAULT OpTIONS------------------------------------- */
   const formData_detail_data = new FormData();
   formData_detail_data.append('action', 'answer');
   formData_detail_data.append(
@@ -103,6 +84,8 @@ setSectionID(SECTIONID)
       }
     }
   };
+
+  /* ------------------------------SEND ALETRT------------------------------------- */
 
   const send_alert_data = new FormData();
   send_alert_data.append('action', 'send_alert');
@@ -139,27 +122,8 @@ setSectionID(SECTIONID)
     }
   };
 
-  const formData_detail = new FormData();
-  formData_detail.append('action', 'init_chat');
-  formData_detail.append('device_print', `${visitorId}_landing`);
-  formData_detail.append('chatbot_id', 12763);
-  formData_detail.append('language_code', 'default');
 
-  const get_ChatBot_utils = async () => {
-    if (visitorId) {
-      try {
-        await axios({
-          method: 'POST',
-          url: 'https://www.smatbot.com/kya_backend/pagehub/chatbot_utils',
-          data: formData_detail,
-          headers: { 'Content-Type': 'multipart/form-data' },
-        }).then((data) => console.log(data));
-      } catch (error) {
-        console.log(error);
-      }
-    }
-  };
-
+  /* ------------------------------SUBMITING THE FORM DETAILS TO BACKEND AND GETTING CALENDER DEFAULT OpTIONS------------------------------------- */
   const handleSubmit = (e) => {
     e.preventDefault();
     if (
@@ -174,12 +138,8 @@ setSectionID(SECTIONID)
                 'userData',
                 JSON.stringify({ ...userData, number, mobile })
               );
-              console.log(userData);
               setLoading(true);
               post_Form_data();
-
-              // get_ChatBot_utils();
-
               send_alert_Post_data();
             } else {
               setError('compNameErr');
@@ -203,6 +163,8 @@ setSectionID(SECTIONID)
     }
   };
 
+
+    /* ------------------------------IF ONLY CB SECTION AND CALENDER DEFAULT OpTIONS ARE THERE THEN NAVIGATE TO BOOKING AGE------------------------------------- */
   useEffect(() => {
     if (Cal_Data?.length > 0 && cb_section) {
       setTimeout(() => {
@@ -214,10 +176,12 @@ setSectionID(SECTIONID)
 
 
 
+  /* ------------------------------RESHUDLE THE DEMO AND GETTING FORM DAEAILTS AND CALENDER DEFAULT OpTIONS------------------------------------- */
   const reshudle_detail_data = new FormData();
-  reshudle_detail_data.append('bot_id', 12763);
+  reshudle_detail_data.append('bot_id', chatbotid?.length>0 ? chatbotid : 12763);
   reshudle_detail_data.append('session_id', sectionID);
 
+  
   const reshudle_demo = async () => {
     if (sectionID && sectionID.length>0) {
       try {
@@ -227,11 +191,12 @@ setSectionID(SECTIONID)
           data: reshudle_detail_data,
           headers: { 'Content-Type': 'multipart/form-data' },
         });
-        
+      let filterData = data.data.qna_prev.filter( (text)=> text.default_options.includes('date_range') )
+   
      let res =(data.data.qna_prev[0].answer_text.includes('}')) ? JSON.parse(data.data.qna_prev[0].answer_text) :(data.data.qna_prev[0].answer_text)
      let response = data.data.qna_prev[data.data.qna_prev.length-1]?.default_options
-    
-      setCal_Data(response)
+      setCal_Data(filterData[0].default_options)
+      setresheaduleDate(filterData[filterData.length-1].answer_text)
       setUserData({
         name: (data.data.qna_prev[0]?.answer_text.includes('}')) ?  res?.Name : data.data?.qna_prev[0]?.answer_text,
         email: (data.data.qna_prev[0]?.answer_text.includes('}')) ?  res['Business Email'] : data.data?.qna_prev[1]?.answer_text,
@@ -243,22 +208,22 @@ setSectionID(SECTIONID)
         dialCode: res['Country Code']?.split(' ')[1],
         isoCode: res['Country Code']?.split(' ')[0]
       })
-      setnext_ques(data.data.qna_prev[data.data.qna_prev.length-1])
-      setresheaduleDate(data.data?.qna_prev[data.data.qna_prev.length-1].answer_text)
+     // setnext_ques(data.data.qna_prev[data.data.qna_prev.length-1])
+     setnext_ques(JSON.parse(filterData[0]))
+     
 
       } catch (error) {
         console.log(error);
       }
     }
   };
-  console.log(Cal_Data);
+
   localStorage.setItem(
     'userData',
     JSON.stringify({ ...userData, number, mobile })
   );
 
-  console.log(userData);
-console.log(mobile);
+
 
   useEffect(() => {
     if ( sectionID.length>0 ) {

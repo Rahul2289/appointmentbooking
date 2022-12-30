@@ -25,31 +25,15 @@ import axios from 'axios';
 import { ToastContainer, toast } from 'react-toastify';
 const CalenderBooking = () => {
   const [checked, setChecked] = useState(true);
+  const [timeing, setTimeing] = useState('00:00 PM');
+  const [timer_loader, setTimer_loader] = useState(false);
   const navigate = useNavigate();
   const {
-    Cal_Data,
-    cb_section,
-    next_ques,
-    Time_slots,
-    setTime_slots,
-    loading,
-    setLoading,
-    value,
-    onChange,
-    boooked_date,
-    setBooked_date,
-    standardTimeing,
-    setStandardTimeing,
-    disable,
-    setdisable,
-    sectionID,
-     setSectionID,
-     mobile,
-     userData,
-     resheaduleDate
+    Cal_Data, cb_section, next_ques, Time_slots, setTime_slots, loading, setLoading, value, onChange, boooked_date, setBooked_date,
+    standardTimeing,setStandardTimeing,   disable,   setdisable,  sectionID,  setSectionID,  mobile,  userData,  resheaduleDate
   } = useAppContext();
-
-
+console.log(resheaduleDate);
+  // calender default otions = Cal_Data 
   let data = (Cal_Data && Cal_Data.length > 0 )? JSON.parse(Cal_Data) : {};
   useEffect(() => {
     try {
@@ -107,8 +91,7 @@ const CalenderBooking = () => {
     );
   }
 
-  console.log(max_date);
-  console.log(min_date);
+
 
   //weaak days
 
@@ -117,20 +100,13 @@ const CalenderBooking = () => {
   let block_days = total_week_days.filter(function (n) {
     return !this.has(n);
   }, new Set(data?.weekdays));
-  console.log(block_days);
-  // const disable_weaks = (date, block_days) => {
-  //   return block_days.map((weaks) => date.getDay() === weaks);
-  // };
+ 
+
 
   const defaultTimeZone = moment.tz.guess();
   const timeZonesList = moment.tz.names();
 
-  // let sorted_time = Time_slots[Math.floor(Math.random() * Time_slots.length)];
-  // console.log(sorted_time);
 
-  const [timeing, setTimeing] = useState('00:00 PM');
-
-  const [timer_loader, setTimer_loader] = useState(false);
 
   let current_Day = value?.toString().split(' ')[0];
   let current_month = value?.toString().split(' ')[1];
@@ -140,31 +116,9 @@ const CalenderBooking = () => {
 
   let Month_number = moment().month(current_month).format('M');
 
-  const Start_time = `${current_year}-${Month_number}-${current_Date}T00:00:00${data?.timezone}`;
-  const End_time = `${current_year}-${Month_number}-${current_Date}T23:59:59${data?.timezone}`;
-  const Current_Time = `${current_year}-${Month_number}-${current_Date}${moment(
-    new Date().toLocaleTimeString().split(' '),
-    'h:mm:ss A'
-  ).format('HH:mm:ss')}${data?.timezone}`;
-  console.log(
-    moment(new Date().toLocaleTimeString().split(' '), 'h:mm:ss A').format(
-      'YYYY-MM-DD HH:mm:ss'
-    )
-  );
-  //convert standard time
-
-  // function convertStandardTime(time) {
-  //   let hours = Number(time.match(/^(\d+)/)[1]);
-  //   let minutes = Number(time.match(/:(\d+)/)[1]);
-  //   let AMPM = time.match(/\s(.*)$/)[1];
-  //   if (AMPM == "PM" && hours < 12) hours = hours + 12;
-  //   if (AMPM == "AM" && hours == 12) hours = hours - 12;
-  //   let sHours = hours.toString();
-  //   let sMinutes = minutes.toString();
-  //   if (hours < 10) sHours = "0" + sHours;
-  //   if (minutes < 10) sMinutes = "0" + sMinutes;
-  //   return sHours + ":" + sMinutes;
-  // }
+  
+ 
+/* ------------------------------convert standard time------------------------------------- */
 
   const convertStandardTime = (timeStr) => {
     const [time, modifier] = timeStr.toString().split(' ');
@@ -178,10 +132,7 @@ const CalenderBooking = () => {
     return `${hours}:${minutes}`;
   };
 
-  // let options = timeZonesList.map((time) => ({
-  //   value: `(GMT${moment.tz(time).format("Z")}) ${time} `,
-  //   name: `(GMT${moment.tz(time).format("Z")}) ${time} `,
-  // }));
+
   let options = available_timezones_shedular.map((time) => ({
     value: `(GMT${time.value}) ${time.name} `,
     name: `(GMT${time.value}) ${time.name} `,
@@ -198,7 +149,7 @@ const CalenderBooking = () => {
     'h:mm:ss A'
   ).format('HH:mm:ss')}${data?.timezone}`;
  
-
+/* ------------------------------GET TIME  SLOTS BASED ON DATE ------------------------------------- */
   const get_slots = async () => {
     if (value) {
       try {
@@ -234,6 +185,7 @@ const CalenderBooking = () => {
     }
   };
 
+ /* ------------------------------GET TIME ZONE SLOTS------------------------------------- */
   const get_slots_timezone = async (time) => {
     const timeZone_values =  time.split(' ')[0].split('T')[1].split(')')[0] ;
       console.log(timeZone_values);
@@ -244,9 +196,7 @@ const CalenderBooking = () => {
       try {
         setTimer_loader(true);
         const res = await axios.get(
-          `https://www.smatbot.com/kya_backend/pagehub/getSlots?chatbot_id=${
-          next_ques?.chatbot_id ? next_ques?.chatbot_id :  12763
-        }&question_id=${next_ques?.id ? next_ques?.id : 580881}&cb_session=${
+          `https://www.smatbot.com/kya_backend/pagehub/getSlots?chatbot_id=${next_ques?.chatbot_id ? next_ques?.chatbot_id :  12763}&question_id=${next_ques?.id ? next_ques?.id : 580881}&cb_session=${
           cb_section.cb_session ?  cb_section.cb_session : sectionID
         }&starttime=${encodeURIComponent(
             Start_time_values
@@ -295,29 +245,27 @@ const CalenderBooking = () => {
   };
   changeDayNameToFull();
 
+  
   const handleTimeing = (e) => {
     setChecked(!checked);
     // setTimeing(checked ? e.target.textContent : "00:00 PM");
     setTimeing(e.target.textContent);
   };
+
   useEffect(() => {
     if (timeing != '00:00 PM') {
       setdisable(false);
     }
   }, [timeing]);
 
-  // useEffect(() => {
-  //   if (standardTimeing) {
-  //     get_slots_timezone()
-  //   }
-  // }, [standardTimeing]);
+ /* ------------------------------ getting slotes based on changeing the date------------------------------------ */
   useEffect(() => {
     if (value) {
       get_slots();
     }
   }, [value]);
-  console.log(next_ques?.sequence);
-  console.log(value);
+
+  /* ------------------------------ACTION = answer AND sending booking slot  ------------------------------------- */
   const Conform_booked_Data = new FormData();
   Conform_booked_Data.append('action', 'answer');
   Conform_booked_Data.append(
@@ -354,6 +302,7 @@ const CalenderBooking = () => {
   let Booked_time = `T${convertStandardTime(timeing)}:00`;
   let Booked_date = `${current_year}-${Month_number}-${current_Date}${Booked_time}${timeZone_value}`;
 
+   /* ------------------------------ posting the reshesdile data to google sheet------------------------------------- */
 const postToGoogleSheet =async()=>{
   try {
     const data = await axios.get(`https://script.google.com/macros/s/AKfycbxm-Q_gTTrl6xWDfd5kDTekuLp6GICMzi2RqtL3lcz96ao2dtqO5pDGXxaTiUOwf_oEhg/exec?email=${userData.email}&mobile_number=${mobile}&slot=${current_Day}, ${current_month} ${current_Date}, ${timeing} |  ${standardTimeing && standardTimeing}&status=Rescheduled&reason=${`NA`}`)
@@ -363,6 +312,7 @@ const postToGoogleSheet =async()=>{
   }
 }
 
+  /* ------------------------------ Booking the appointment Conformed------------------------------------- */
   const booked_Data = new FormData();
   booked_Data.append('chatbot_id', next_ques?.chatbot_id ? next_ques?.chatbot_id :  12763);
   booked_Data.append('cb_session', cb_section.cb_session ?  cb_section.cb_session : sectionID);
@@ -430,6 +380,7 @@ const postToGoogleSheet =async()=>{
       });
     }
   };
+   /* ------------------------------ getting slotes based on changeing the time zone ------------------------------------ */
 const handleOnchangeStandardTimeing =(e)=>{
   setStandardTimeing(e)
   if(e && e.length>0){

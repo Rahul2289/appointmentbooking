@@ -9,34 +9,13 @@ import { useAppContext } from "../context/context";
 import { useOutsideClick } from "./WIthClickOutSIde";
 
 const Form = (props) => {
-  const {
-    countries,
-    setcountries,
-    initialCountryFlag,
-    setInitialCountryFlag,
-    mobile,
-    setmobile,
-    setNumber,
-    flagsearchValue,
-    setFlagSearchValue,
-    dropDownSelect,
-    setDropDownSelect,
-    fetchCountries,
+  const { countries, setcountries, initialCountryFlag, setInitialCountryFlag, mobile, setmobile, setNumber, flagsearchValue,
+    setFlagSearchValue, dropDownSelect, setDropDownSelect, fetchCountries,
   } = useAppContext();
 
-  const {
-    geopl,
-    handleSubmit,
-    handleChange,
-    userData,
-    error,
-    nameRegex,
-    emailRegex,
-    number,
-    urlRegEx,
-    loading,
-  } = props;
+  const { geopl, handleSubmit, handleChange, userData, error, nameRegex, emailRegex, number, urlRegEx, loading} = props;
 
+    /* ------------------------------FILTERING THE COUNTRY BASED ON CURRENT LOCATION------------------------------------- */ 
   useEffect(() => {
     countries.filter((data) => {
       if (data.isoCode === geopl.country_code) {
@@ -50,7 +29,7 @@ const Form = (props) => {
       }
     });
   }, [geopl]);
-
+    /* ------------------------------HANDLE FLAGE AND INpUT BASED ON USER SELECT------------------------------------- */ 
   const handlecountrydata = (data) => {
     setNumber({
       dialCode: data.dialCode,
@@ -69,7 +48,7 @@ const Form = (props) => {
   const ref = useOutsideClick(handleDropDown);
 
   const [filteredResults, setFilteredResults] = useState([]);
-
+  /* ------------------------------FILTERING THE COUNTRY BASED ON USER SEARCH BY NAME AND COUNTRY CODE------------------------------------ */ 
   const searchItems = (searchValue) => {
     setFlagSearchValue(searchValue.trim());
     if (flagsearchValue !== "") {
@@ -93,101 +72,40 @@ const Form = (props) => {
 
   return (
     <form onSubmit={handleSubmit}>
-      <div
-        className={`form-section ${
-          userData.name.length >= 3 &&
-          nameRegex.test(userData.name.toLowerCase())
-            ? "green-border"
-            : "normal-border"
-        } ${error === "nameErr" ? "red-border" : "normal-border"} `}
-      >
+     { /* ------------------------------USER NAME------------------------------------- */ }
+      <div className={`form-section ${userData.name.length >= 3 && nameRegex.test(userData.name.toLowerCase())  ? "green-border" : "normal-border"} ${error === "nameErr" ? "red-border" : "normal-border"} `}>
         <div className="input-form">Name</div>
-        <input
-          type="text"
-          placeholder={`${
-            error === "nameErr" ? "Enter valid name" : "Enter your Name"
-          }`}
-          name="name"
-          onChange={handleChange}
-          value={userData.name}
-          required
-        />
-        {userData.name.length >= 3 &&
-          nameRegex.test(userData.name.toLowerCase()) && (
-            <img
-              src={checkedIcon}
-              alt=""
-              width="18px"
-              height="18px"
-              className="m-l-auto m-r-5"
-            />
+        <input   type="text"  placeholder={`${   error === "nameErr" ? "Enter valid name" : "Enter your Name" }`}  name="name" onChange={handleChange} value={userData.name} required />
+        {userData.name.length >= 3 && nameRegex.test(userData.name.toLowerCase()) && (
+            <img  src={checkedIcon}  alt=""width="18px"  height="18px"  className="m-l-auto m-r-5" />
           )}
       </div>
-      <div
-        className={`form-section ${
-          emailRegex.test(userData.email.toLowerCase())
-            ? "green-border"
-            : "normal-border"
-        } ${error === "emailErr" ? "red-border" : "normal-border"}`}
-      >
+
+
+      { /* ------------------------------USER EMAIL------------------------------------- */ }
+      <div className={`form-section ${  emailRegex.test(userData.email.toLowerCase()) ? "green-border" : "normal-border"} ${error === "emailErr" ? "red-border" : "normal-border"}`} >
         <div className="input-form">Email</div>
-        <input
-          type="email"
-          placeholder={`${
-            error === "emailErr"
-              ? "Enter valid email"
-              : "Enter your Business Email"
-          }`}
+        <input   type="email"   placeholder={`${ error === "emailErr" ? "Enter valid email" : "Enter your Business Email" }`}
           name="email"
           onChange={handleChange}
           value={userData.email}
           required
         />
         {emailRegex.test(userData.email.toLowerCase()) && (
-          <img
-            src={checkedIcon}
-            alt=""
-            width="18px"
-            height="18px"
-            className="m-l-auto m-r-5"
-          />
+          <img   src={checkedIcon} alt="" width="18px" height="18px" className="m-l-auto m-r-5" />
         )}
       </div>
-      <div
-        className={`form-section ${
-          isValidPhoneNumber(`${number?.dialCode}${mobile}`)
-            ? "green-border"
-            : "normal-border"
-        } ${error === "numberErr" ? "red-border" : "normal-border"}`}
-        ref={ref}
-      >
-        <div
-          className="flag-input"
-          onClick={() => setDropDownSelect(!dropDownSelect)}
-        >
-          <img
-            src={`https://cdn.kcak11.com/CountryFlags/countries/${initialCountryFlag}.svg`}
-            alt=""
-            width="16px"
-          />
-          <MdOutlineArrowDropDown />
+
+
+      { /* ------------------------------USER MOBILE NUMBER------------------------------------- */ }
+      <div className={`form-section ${ isValidPhoneNumber(`${number?.dialCode}${mobile}`) ? "green-border" : "normal-border"} ${error === "numberErr" ? "red-border" : "normal-border"}`} ref={ref} >
+        <div   className="flag-input"  onClick={() => setDropDownSelect(!dropDownSelect)}  >
+          <img    src={`https://cdn.kcak11.com/CountryFlags/countries/${initialCountryFlag}.svg`}  alt=""  width="16px"/>
+             <MdOutlineArrowDropDown />
         </div>
-        <div
-          className={`country-flag-input-scrool ${
-            dropDownSelect ? "show" : "hidden"
-          }`}
-          // ref={ref}
-        >
-          <input
-            className="country-input-search"
-            type="text"
-            placeholder="search"
-            value={flagsearchValue}
-            // onChange={handleSearchFilter}
-            onChange={(e) => searchItems(e.target.value)}
-          />
-          {flagsearchValue.length > 1
-            ? filteredResults.map((data, i) => {
+        <div  className={`country-flag-input-scrool ${      dropDownSelect ? "show" : "hidden"  }`}  >
+          <input  className="country-input-search"  type="text"  placeholder="search"  value={flagsearchValue}   onChange={(e) => searchItems(e.target.value)}  />
+          {flagsearchValue.length > 1  ? filteredResults.map((data, i) => {
                 return (
                   <ul className="country-list " role="listbox" key={i}>
                     <li
@@ -265,63 +183,31 @@ const Form = (props) => {
           />
         )}
       </div>
-      <div
-        className={`form-section ${
-          userData.companyUrl.trim().toLowerCase().match(urlRegEx)
-            ? "green-border"
-            : "normal-border"
-        } ${error === "urlErr" ? "red-border" : "normal-border"}`}
-      >
+
+
+      { /* ------------------------------USER COMANY EMAIL------------------------------------- */ }
+      <div className={`form-section ${ userData.companyUrl.trim().toLowerCase().match(urlRegEx) ? "green-border"  : "normal-border" } ${error === "urlErr" ? "red-border" : "normal-border"}`}  >
         <div className="input-form">Website</div>
-        <input
-          type="text"
-          placeholder={`${
-            error === "urlErr" ? "Enter valid url" : "Enter your Website URL"
-          }`}
-          name="companyUrl"
-          onChange={handleChange}
-          value={userData.companyUrl}
-          required
-        />
+        <input type="text" placeholder={`${ error === "urlErr" ? "Enter valid url" : "Enter your Website URL" }`}
+          name="companyUrl" onChange={handleChange} value={userData.companyUrl} required />
         {userData.companyUrl.trim().toLowerCase().match(urlRegEx) && (
-          <img
-            src={checkedIcon}
-            alt=""
-            width="18px"
-            height="18px"
-            className="m-l-auto m-r-5"
-          />
+          <img src={checkedIcon} alt="" width="18px" height="18px" className="m-l-auto m-r-5"/>
         )}
       </div>
 
-      <div
-        className={`form-section ${
-          userData.companyName.length > 3 ? "green-border" : "normal-border"
-        } ${error === "compNameErr" ? "red-border" : "normal-border"}`}
-      >
+
+      { /* ------------------------------USER COMANY NAME------------------------------------- */ }
+      <div className={`form-section ${userData.companyName.length > 3 ? "green-border" : "normal-border"} ${error === "compNameErr" ? "red-border" : "normal-border"}`} >
         <div className="input-form">Company</div>
-        <input
-          type="text"
-          placeholder={`${
-            error === "compNameErr"
-              ? "Enter valid name"
-              : "Enter your Company Name"
-          }`}
-          name="companyName"
-          onChange={handleChange}
-          value={userData.companyName}
-          required
-        />
+        <input  type="text"  placeholder={`${  error === "compNameErr" ? "Enter valid name" : "Enter your Company Name"  }`}
+          name="companyName" onChange={handleChange} value={userData.companyName}  required />
         {userData.companyName.length > 3 && (
-          <img
-            src={checkedIcon}
-            alt=""
-            width="18px"
-            height="18px"
-            className="m-l-auto m-r-5"
-          />
+          <img   src={checkedIcon}   alt=""   width="18px"   height="18px"   className="m-l-auto m-r-5"  />
         )}
       </div>
+
+
+      { /* ------------------------------SUBBIT BUTTON------------------------------------- */ }
       <button type="submit">
         {loading && (
           <ColorRing

@@ -29,6 +29,7 @@ export const AppProvider = ({ children }) => {
   const [value, onChange] = useState(new Date());
   const [sectionID, setSectionID] = useState('');
   const [resheaduleDate, setresheaduleDate] = useState('');
+  const [ chatbotid , setChatbotid]= useState('');
   const [standardTimeing, setStandardTimeing] = useState(
     `(GMT+05:30) IST, New Delhi `
   );
@@ -48,46 +49,11 @@ export const AppProvider = ({ children }) => {
 
   return (
     <AppContext.Provider
-      value={{
-        boooked_date,
-        value,
-        setBooked_date,
-        onChange,
-        loading,
-        setLoading,
-        number,
-        setNumber,
-        error,
-        setError,
-        userData,
-        setUserData,
-        setCal_Data,
-        Cal_Data,
-        setCb_section,
-        cb_section,
-        next_ques,
-        setnext_ques,
-        Time_slots,
-        setTime_slots,
-        countries,
-        setcountries,
-        initialCountryFlag,
-        setInitialCountryFlag,
-        mobile,
-        setmobile,
-        flagsearchValue,
-        setFlagSearchValue,
-        fetchCountries,
-        dropDownSelect,
-        setDropDownSelect,
-        standardTimeing,
-        setStandardTimeing,
-        disable,
-        setdisable,
-        sectionID,
-         setSectionID,
-         resheaduleDate,
-          setresheaduleDate
+      value={{  boooked_date,  value,  setBooked_date, onChange, loading, setLoading, number, setNumber, error, setError, userData, setUserData,
+        setCal_Data, Cal_Data, setCb_section, cb_section, next_ques, setnext_ques, Time_slots,   setTime_slots, countries, setcountries,
+        initialCountryFlag, setInitialCountryFlag, mobile, setmobile, flagsearchValue, setFlagSearchValue,  fetchCountries, dropDownSelect,
+        setDropDownSelect, standardTimeing, setStandardTimeing, disable, setdisable, sectionID, setSectionID, resheaduleDate, setresheaduleDate,
+        chatbotid , setChatbotid
       }}
     >
       {children}

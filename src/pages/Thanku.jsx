@@ -16,20 +16,8 @@ import { BiArrowBack } from 'react-icons/bi';
 const Thanku = () => {
   const { width, height } = useWindowSize();
 
-  const {
-    Booked_Date,
-    number,
-    userData,
-    setCal_Data,
-    setNumber,
-    setCb_section,
-    setnext_ques,
-    setUserData,
-    setBooked_date,
-    setTime_slots,
-    onChange,
-    mobile,
-    setmobile,
+  const { Booked_Date, number, userData, setCal_Data, setNumber, setCb_section, setnext_ques, setUserData, setBooked_date,
+    setTime_slots, onChange, mobile,setmobile,
   } = useAppContext();
 
   const Data = localStorage.getItem('userData')
