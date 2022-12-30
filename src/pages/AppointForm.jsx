@@ -192,26 +192,24 @@ setChatbotid(CHATBOTID)
           headers: { 'Content-Type': 'multipart/form-data' },
         });
       let filterData = data.data.qna_prev.filter( (text)=> text.default_options.includes('date_range') )
-   
-     let res =(data.data.qna_prev[0].answer_text.includes('}')) ? JSON.parse(data.data.qna_prev[0].answer_text) :(data.data.qna_prev[0].answer_text)
+      let filterUserData = data.data.qna_prev.filter( (text)=> text.answer_text.includes('{\"Name\":') )
+
+     let res =filterUserData[0].answer_text ? JSON.parse(filterUserData[0].answer_text) :(data.data.qna_prev[0].answer_text)
      let response = data.data.qna_prev[data.data.qna_prev.length-1]?.default_options
       setCal_Data(filterData[0].default_options)
       setresheaduleDate(filterData[filterData.length-1].answer_text)
       setUserData({
-        name: (data.data.qna_prev[0]?.answer_text.includes('}')) ?  res?.Name : data.data?.qna_prev[0]?.answer_text,
-        email: (data.data.qna_prev[0]?.answer_text.includes('}')) ?  res['Business Email'] : data.data?.qna_prev[1]?.answer_text,
-        companyUrl:(data.data.qna_prev[0]?.answer_text.includes('}')) ? res['Company Website'] : data.data?.qna_prev[3]?.answer_text,
-        companyName:(data.data.qna_prev[0]?.answer_text.includes('}')) ? res['Company name'] : data.data?.qna_prev[4]?.answer_text,
+        name: filterUserData[0].answer_text ?  res?.Name : data.data?.qna_prev[0]?.answer_text,
+        email: filterUserData[0].answer_text ?  res['Business Email'] : data.data?.qna_prev[1]?.answer_text,
+        companyUrl:filterUserData[0].answer_text ? res['Company Website'] : data.data?.qna_prev[3]?.answer_text,
+        companyName:filterUserData[0].answer_text ? res['Company name'] : data.data?.qna_prev[4]?.answer_text,
       })
-      setmobile( (data.data.qna_prev[0]?.answer_text.includes('}')) ? res['Phone Number']: data.data?.qna_prev[2]?.answer_text )
+      setmobile( filterUserData ? res['Phone Number']: data.data?.qna_prev[2]?.answer_text )
       setNumber({
         dialCode: res['Country Code']?.split(' ')[1],
         isoCode: res['Country Code']?.split(' ')[0]
       })
-     // setnext_ques(data.data.qna_prev[data.data.qna_prev.length-1])
-     setnext_ques(JSON.parse(filterData[0]))
-     
-
+     setnext_ques(filterData[0])
       } catch (error) {
         console.log(error);
       }

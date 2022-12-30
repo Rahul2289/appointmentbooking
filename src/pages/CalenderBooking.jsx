@@ -32,7 +32,7 @@ const CalenderBooking = () => {
     Cal_Data, cb_section, next_ques, Time_slots, setTime_slots, loading, setLoading, value, onChange, boooked_date, setBooked_date,
     standardTimeing,setStandardTimeing,   disable,   setdisable,  sectionID,  setSectionID,  mobile,  userData,  resheaduleDate
   } = useAppContext();
-console.log(resheaduleDate);
+
   // calender default otions = Cal_Data 
   let data = (Cal_Data && Cal_Data.length > 0 )? JSON.parse(Cal_Data) : {};
   useEffect(() => {
@@ -273,7 +273,7 @@ console.log(resheaduleDate);
     `${current_Date} ${current_month} ${current_year} at ${timeing}`
   );
   Conform_booked_Data.append('cb_session', cb_section.cb_session ?  cb_section.cb_session : sectionID);
-  Conform_booked_Data.append('question_id', next_ques.id);
+  Conform_booked_Data.append('question_id', next_ques?.id ? next_ques?.id : 580881);
   Conform_booked_Data.append('is_logical', 1);
   Conform_booked_Data.append('sequence', next_ques?.sequence);
   Conform_booked_Data.append('chatbot_id', next_ques?.chatbot_id);
@@ -306,7 +306,7 @@ console.log(resheaduleDate);
 const postToGoogleSheet =async()=>{
   try {
     const data = await axios.get(`https://script.google.com/macros/s/AKfycbxm-Q_gTTrl6xWDfd5kDTekuLp6GICMzi2RqtL3lcz96ao2dtqO5pDGXxaTiUOwf_oEhg/exec?email=${userData.email}&mobile_number=${mobile}&slot=${current_Day}, ${current_month} ${current_Date}, ${timeing} |  ${standardTimeing && standardTimeing}&status=Rescheduled&reason=${`NA`}`)
-    console.log(data);
+    
   } catch (error) {
     console.log(error);
   }
@@ -316,7 +316,7 @@ const postToGoogleSheet =async()=>{
   const booked_Data = new FormData();
   booked_Data.append('chatbot_id', next_ques?.chatbot_id ? next_ques?.chatbot_id :  12763);
   booked_Data.append('cb_session', cb_section.cb_session ?  cb_section.cb_session : sectionID);
-  booked_Data.append('question_id', next_ques?.id);
+  booked_Data.append('question_id', next_ques?.id && next_ques?.id);
   booked_Data.append('time', Booked_date);
 
   const handleBookTheSlot = async () => {
@@ -357,7 +357,7 @@ const postToGoogleSheet =async()=>{
         conformed_booking();
 
            setTimeout(() => {
-             window.open('../../thankYou.html', '_self');
+              window.open('../../thankYou.html', '_self');
             setLoading(false);
          }, 500);
          if (sectionID.length>0) {
