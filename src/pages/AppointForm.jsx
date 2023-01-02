@@ -194,17 +194,28 @@ setChatbotid(CHATBOTID)
       let filterData = data.data.qna_prev.filter( (text)=> text.default_options.includes('date_range') )
       let filterUserData = data.data.qna_prev.filter( (text)=> text.answer_text.includes('{\"Name\":') )
 
-     let res =filterUserData[0].answer_text ? JSON.parse(filterUserData[0].answer_text) :(data.data.qna_prev[0].answer_text)
-     let response = data.data.qna_prev[data.data.qna_prev.length-1]?.default_options
+     let res =filterUserData[0]?.answer_text ? JSON.parse(filterUserData[0].answer_text) :(data.data.qna_prev[0].answer_text)
+    
+     
+let filterName = data.data.qna_prev.filter( (text)=> text.type ==='question')
+let filterEmail =  data.data.qna_prev.filter( (text)=> text.type ==='email')
+let filterComanyUrl =  data.data.qna_prev.filter( (text)=> text.type ==='website')
+let filterMobile =  data.data.qna_prev.filter( (text)=> text.type ==='phone')
+
+let filterMobileForWhatsApp =  data.data.source.from_whatsapp_number
+
+
+let filterInstaAndWhatsAppmobile = filterMobile[0]?.answer_text ? filterMobile[0]?.answer_text : filterMobileForWhatsApp
+
       setCal_Data(filterData[0].default_options)
       setresheaduleDate(filterData[filterData.length-1].answer_text)
       setUserData({
-        name: filterUserData[0].answer_text ?  res?.Name : data.data?.qna_prev[0]?.answer_text,
-        email: filterUserData[0].answer_text ?  res['Business Email'] : data.data?.qna_prev[1]?.answer_text,
-        companyUrl:filterUserData[0].answer_text ? res['Company Website'] : data.data?.qna_prev[3]?.answer_text,
-        companyName:filterUserData[0].answer_text ? res['Company name'] : data.data?.qna_prev[4]?.answer_text,
+        name: filterUserData[0]?.answer_text ?  res?.Name : filterName[0]?.answer_text,
+        email: filterUserData[0]?.answer_text ?  res['Business Email'] : filterEmail[0]?.answer_text,
+        companyUrl:filterUserData[0]?.answer_text ? res['Company Website'] : filterComanyUrl[0]?.answer_text,
+        companyName:filterUserData[0]?.answer_text ? res['Company name'] : data.data?.qna_prev[1]?.answer_text,
       })
-      setmobile( filterUserData ? res['Phone Number']: data.data?.qna_prev[2]?.answer_text )
+      setmobile( filterUserData[0]?.answer_text ? res['Phone Number']: filterInstaAndWhatsAppmobile )
       setNumber({
         dialCode: res['Country Code']?.split(' ')[1],
         isoCode: res['Country Code']?.split(' ')[0]
