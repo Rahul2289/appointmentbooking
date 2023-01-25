@@ -5,6 +5,7 @@ const AppContext = React.createContext();
 export const AppProvider = ({ children }) => {
   const [loading, setLoading] = useState(false);
   const [disable, setdisable] = useState(true);
+  const [fbclid, setFbclid] = useState('');
   const [number, setNumber] = useState({
     dialCode: '+91',
     flag: 'https://cdn.kcak11.com/CountryFlags/countries/in.svg',
@@ -55,7 +56,7 @@ export const AppProvider = ({ children }) => {
         setCal_Data, Cal_Data, setCb_section, cb_section, next_ques, setnext_ques, Time_slots,   setTime_slots, countries, setcountries,
         initialCountryFlag, setInitialCountryFlag, mobile, setmobile, flagsearchValue, setFlagSearchValue,  fetchCountries, dropDownSelect,
         setDropDownSelect, standardTimeing, setStandardTimeing, disable, setdisable, sectionID, setSectionID, resheaduleDate, setresheaduleDate,
-        chatbotid , setChatbotid
+        chatbotid , setChatbotid,fbclid, setFbclid
       }}
     >
       {children}

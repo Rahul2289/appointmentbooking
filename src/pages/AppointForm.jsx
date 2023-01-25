@@ -19,7 +19,7 @@ function AppointForm({geopl,chatBotUtils_1,next_question,sheet_id,visitorId,}) {
 
   const {cb_section,Cal_Data,loading,setLoading,number,setNumber,error,setError,userData,setUserData,setCal_Data,setCb_section,setnext_ques,mobile,
     setmobile,  fetchCountries, flagsearchValue, setFlagSearchValue, countries, setcountries, setDropDownSelect, sectionID, setSectionID,setresheaduleDate,
-    chatbotid , setChatbotid
+    chatbotid , setChatbotid,fbclid, setFbclid
   } = useAppContext();
 
   const navigate = useNavigate();
@@ -30,7 +30,11 @@ function AppointForm({geopl,chatBotUtils_1,next_question,sheet_id,visitorId,}) {
  
   const [searchParams] = useSearchParams();
 
-
+  
+  if (window.location.href.includes('fbclid')) {
+  let FBCLID = searchParams.get('fbclid')
+  setFbclid(FBCLID)
+  }
   
 if (window.location.href.includes('Rescheduled')) {
 let SECTIONID = searchParams.get('session_id')
@@ -91,21 +95,15 @@ setChatbotid(CHATBOTID)
   send_alert_data.append('action', 'send_alert');
   send_alert_data.append('cb_session', chatBotUtils_1?.cb_session);
   send_alert_data.append('chatbot_id', next_question?.chatbot_id);
-  send_alert_data.append(
-    'url',
-    'https://www.page.smatbot.com/?name=Demo_Bot&id=12763&book_demo=true'
-  );
-  send_alert_data.append('source', 'https://www.page.smatbot.com/');
+  send_alert_data.append('url',`${window.location.href}`);
+  send_alert_data.append('source', `${window.location.href}`);
   send_alert_data.append('name', 'SmatBot');
   send_alert_data.append('client_ip_address', geopl?.IPv4);
   send_alert_data.append('user_location', geopl?.location);
   send_alert_data.append('last_question_answered', 0);
   send_alert_data.append('sheet_id', sheet_id);
   send_alert_data.append('timestamp', new Date());
-  send_alert_data.append(
-    'hours',
-    new Date().toString().split(' ')[4].split(':')[0]
-  );
+  send_alert_data.append( 'hours', new Date().toString().split(' ')[4].split(':')[0] );
 
   const send_alert_Post_data = async () => {
     if (next_question?.chatbot_id) {

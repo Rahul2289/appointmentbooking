@@ -132,7 +132,7 @@ function App() {
       geopl.IPv4
     }","user_location":"${
       geopl.location
-    }","bot_url":"${'https://www.page.smatbot.com/?name=Demo_Bot&id=12763&book_demo=true'}"}`
+    }","bot_url":"${window.location.href}"}`
   );
   formData_detail_1.append('language_code', 'default');
   formData_detail_1.append('lead_revisited', 1);
@@ -164,18 +164,12 @@ function App() {
   const formData_detail_2 = new FormData();
   formData_detail_2.append('action', 'answer');
   formData_detail_2.append('chatbot_id', Init_question.chatbot_id);
-  formData_detail_2.append(
-    'answer_text',
-    'https://www.page.smatbot.com/?name=Demo_Bot&id=12763&book_demo=true'
-  );
+  formData_detail_2.append('answer_text',`${window.location.href}`);
   formData_detail_2.append('cb_session', chatBotUtils?.cb_session);
   formData_detail_2.append('question_id', Init_question.id);
   formData_detail_2.append('is_logical', Init_question.logical_jump);
   formData_detail_2.append('sequence', Init_question.sequence);
-  formData_detail_2.append(
-    'option',
-    'https://www.page.smatbot.com/?name=Demo_Bot&id=12763&book_demo=true'
-  );
+  formData_detail_2.append('option',`${window.location.href}`);
   formData_detail_2.append('language_code', chatBotUtils?.language_code);
   formData_detail_2.append('visitor_link_traversal', `${''}`);
 
