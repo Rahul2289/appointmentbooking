@@ -116,7 +116,11 @@ const CalenderBooking = () => {
 
   let Month_number = moment().month(current_month).format('M');
 
-  
+  if (Month_number>10) {
+    Month_number = moment().month(current_month).format('M');
+  }else{
+    Month_number = `0${moment().month(current_month).format('M')}`
+  }
  
 /* ------------------------------convert standard time------------------------------------- */
 
@@ -192,6 +196,7 @@ const CalenderBooking = () => {
       setStandardTimeing(time)
   const Start_time_values = `${current_year}-${Month_number}-${current_Date}T00:00:00${timeZone_values}`;
   const End_time_values = `${current_year}-${Month_number}-${current_Date}T23:59:59${timeZone_values}`;
+  
     if ( timeZone_values && timeZone_values.length>0) {
       try {
         setTimer_loader(true);
@@ -356,10 +361,10 @@ const postToGoogleSheet =async()=>{
 
         conformed_booking();
 
-           setTimeout(() => {
-              window.open('../../thankYou.html', '_self');
-            setLoading(false);
-         }, 500);
+            setTimeout(() => {
+               window.open('../../thankYou.html', '_self');
+             setLoading(false);
+          }, 500);
          if (sectionID.length>0) {
           postToGoogleSheet()
          }
