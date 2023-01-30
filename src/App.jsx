@@ -9,11 +9,13 @@ import FingerprintJS from '@fingerprintjs/fingerprintjs';
 import axios from 'axios';
 
 import Thanku from './pages/Thanku';
+import ThankYou from './pages/ResheduleThankYou';
 
 import 'react-toastify/dist/ReactToastify.css';
 
 import { useAppContext } from './context/context';
 import Protected from './components/Protected';
+
 
 const fpPromise = FingerprintJS.load();
 function App() {
@@ -218,6 +220,8 @@ function App() {
           }
         />
         <Route path='/thankYou' element={<Thanku />} />
+        <Route path='/thankyou' element={<ThankYou />} />
+        
         {/* <Route path='/thankYou.html' /> */}
       </Routes>
     </BrowserRouter>

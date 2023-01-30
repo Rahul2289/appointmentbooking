@@ -361,10 +361,18 @@ const postToGoogleSheet =async()=>{
 
         conformed_booking();
 
-            setTimeout(() => {
-               window.open('../../thankYou.html', '_self');
-             setLoading(false);
-          }, 500);
+              if (sectionID && sectionID.length>0) {
+                setTimeout(() => {
+                  setLoading(false);
+                   navigate('/thankyou');
+                }, 1000);
+              }else{
+                setTimeout(() => {
+                  window.open('../../thankYou.html', '_self');
+                  setLoading(false);
+                 }, 500);
+              }
+              
          if (sectionID.length>0) {
           postToGoogleSheet()
          }
