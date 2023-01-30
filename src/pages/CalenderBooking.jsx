@@ -364,7 +364,7 @@ const postToGoogleSheet =async()=>{
               if (sectionID && sectionID.length>0) {
                 setTimeout(() => {
                   setLoading(false);
-                   navigate('/thankyou');
+                   navigate('/reschedule/thankyou');
                 }, 1000);
               }else{
                 setTimeout(() => {

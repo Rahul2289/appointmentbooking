@@ -220,7 +220,7 @@ function App() {
           }
         />
         <Route path='/thankYou' element={<Thanku />} />
-        <Route path='/thankyou' element={<ThankYou />} />
+        <Route path='/reschedule/thankyou' element={<ThankYou />} />
         
         {/* <Route path='/thankYou.html' /> */}
       </Routes>
