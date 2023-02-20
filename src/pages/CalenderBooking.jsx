@@ -365,7 +365,7 @@ const postToGoogleSheet =async()=>{
                 setTimeout(() => {
                   setLoading(false);
                    navigate('/reschedule/thankyou');
-                }, 1000);
+                }, 500);
               }else{
                 setTimeout(() => {
                   window.open('../../thankYou.html', '_self');

@@ -15,6 +15,7 @@ import 'react-toastify/dist/ReactToastify.css';
 
 import { useAppContext } from './context/context';
 import Protected from './components/Protected';
+import Conform from './pages/Conform';
 
 
 const fpPromise = FingerprintJS.load();
@@ -219,6 +220,7 @@ function App() {
              </Protected>
           }
         />
+        <Route path='/Conform' element={<Conform />} />
         <Route path='/thankYou' element={<Thanku />} />
         <Route path='/reschedule/thankyou' element={<ThankYou />} />
         

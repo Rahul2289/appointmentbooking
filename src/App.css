@@ -1359,3 +1359,71 @@ button.react-calendar__tile.react-calendar__month-view__days__day:enabled:hover 
   color: #fff;
   margin: 0px;
 }
+.ConformCOntainer{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  min-height:100vh;
+}
+.ConformCOntainer .ConformWrapper{
+ width: 50%;
+ min-height: 425px;
+ box-shadow: 0px 0px 20px #465def29;
+ border-radius: 8px;
+ padding: 25px  32px;
+}
+.ConformCOntainer .ConformWrapper .left .row{
+  display: flex;
+  align-items: center;
+}
+.ConformCOntainer .ConformWrapper .left {
+  display: flex;
+  flex-direction: column;
+}
+.ConformCOntainer .ConformWrapper .left .powred-by{
+margin-top: 2rem;
+}
+.ConformCOntainer .ConformWrapper .left .btnGrp {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  width: 70%;
+  margin: auto
+}
+.ConformCOntainer .ConformWrapper .left .btnGrp button{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+
+  width: 100%;
+  height: 38px;
+
+  border: 1px solid #465def;
+  background-color: #465def;
+  color: #ffff;
+
+  border-radius: 5px;
+  border: none;
+  outline: none;
+
+  margin: auto;
+
+  cursor: pointer;
+
+  font-family: 'Rubik', sans-serif;
+
+}
+.ConformCOntainer .ConformWrapper .left .btnGrp button:hover{
+  background-color: #2d48f8;
+}
+@media screen and (max-width: 760px) {
+  .ConformCOntainer .ConformWrapper{
+    width: 90%;
+   }
+   .ConformCOntainer .ConformWrapper .left .btnGrp{
+    width: 100%;
+  }
+}
