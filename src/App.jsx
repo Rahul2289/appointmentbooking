@@ -16,6 +16,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import { useAppContext } from './context/context';
 import Protected from './components/Protected';
 import Conform from './pages/Conform';
+import { baseUrl ,botID } from './confits';
 
 
 const fpPromise = FingerprintJS.load();
@@ -60,7 +61,7 @@ function App() {
     if (geopl_Loading.current === false) {
       try {
         axios
-          .get('https://www.smatbot.com/kya_backend/api/geoIp')
+          .get(`${baseUrl}/kya_backend/api/geoIp`)
           .then((data) => setGeopl(data.data.response));
       } catch (error) {
         console.log(error);
@@ -76,12 +77,12 @@ function App() {
     /* ------------------------------ACTION = read_cb_by_id AND GETTING spreadsheet_id------------------------------------- */  
   let formData_init = new FormData();
   formData_init.append('action', 'read_cb_by_id');
-  formData_init.append('chatbot_id', 12763);
+  formData_init.append('chatbot_id', botID);
 
   useEffect(() => {
  
       try {
-        fetch('https://www.smatbot.com/kya_backend/pagehub/chatbot_utils', {
+        fetch(`${baseUrl}/kya_backend/pagehub/chatbot_utils`, {
           method: 'POST',
           body: formData_init,
         })
@@ -97,7 +98,7 @@ function App() {
   const formData_detail = new FormData();
   formData_detail.append('action', 'init_chat');
   formData_detail.append('device_print', `${visitorId}_landing`);
-  formData_detail.append('chatbot_id', 12763);
+  formData_detail.append('chatbot_id', botID);
   formData_detail.append('name', 'SmatBot');
   formData_detail.append('language_code', 'default');
   formData_detail.append('book_demo', 1);
@@ -107,7 +108,7 @@ function App() {
       try {
         await axios({
           method: 'POST',
-          url: 'https://www.smatbot.com/kya_backend/pagehub/chatbot_utils',
+          url: `${baseUrl}/kya_backend/pagehub/chatbot_utils`,
           data: formData_detail,
           headers: { 'Content-Type': 'multipart/form-data' },
         }).then((data) => console.log(data));
@@ -128,10 +129,10 @@ function App() {
   const formData_detail_1 = new FormData();
   formData_detail_1.append('action', 'init_chat');
   formData_detail_1.append('device_print', `${visitorId}_landing`);
-  formData_detail_1.append('chatbot_id', 12763);
+  formData_detail_1.append('chatbot_id', botID);
   formData_detail_1.append(
     'source',
-    `{"url":"https://www.smatbot.com/", "date":"${new Date()}","channel":"${'Web'}","timezone":${Time_Zone},"client_ip_address":"${
+    `{"url":${baseUrl}, "date":"${new Date()}","channel":"${'Web'}","timezone":${Time_Zone},"client_ip_address":"${
       geopl.IPv4
     }","user_location":"${
       geopl.location
@@ -148,7 +149,7 @@ function App() {
       try {
         const data = await axios({
           method: 'POST',
-          url: 'https://www.smatbot.com/kya_backend/pagehub/chatbot_utils',
+          url: `${baseUrl}/kya_backend/pagehub/chatbot_utils`,
           data: formData_detail_1,
           headers: { 'Content-Type': 'multipart/form-data' },
         });
@@ -167,11 +168,14 @@ function App() {
   const formData_detail_2 = new FormData();
   formData_detail_2.append('action', 'answer');
   formData_detail_2.append('chatbot_id', Init_question.chatbot_id);
+  // formData_detail_2.append('answer_text',`https://www.demo.feltso.com/?name=Demo_Bot&book_demo=true`);
   formData_detail_2.append('answer_text',`${window.location.href}`);
+  
   formData_detail_2.append('cb_session', chatBotUtils?.cb_session);
   formData_detail_2.append('question_id', Init_question.id);
   formData_detail_2.append('is_logical', Init_question.logical_jump);
   formData_detail_2.append('sequence', Init_question.sequence);
+  // formData_detail_2.append('option',`https://www.demo.feltso.com/?name=Demo_Bot&book_demo=true`);
   formData_detail_2.append('option',`${window.location.href}`);
   formData_detail_2.append('language_code', chatBotUtils?.language_code);
   formData_detail_2.append('visitor_link_traversal', `${''}`);
@@ -181,7 +185,7 @@ function App() {
       try {
         const data = await axios({
           method: 'POST',
-          url: 'https://www.smatbot.com/kya_backend/pagehub/chatbot_utils',
+          url: `${baseUrl}/kya_backend/pagehub/chatbot_utils`,
           data: formData_detail_2,
           headers: { 'Content-Type': 'multipart/form-data' },
         });

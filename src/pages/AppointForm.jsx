@@ -12,7 +12,7 @@ import axios from 'axios';
 import { useAppContext } from '../context/context';
 import { useOutsideClick } from './../components/WIthClickOutSIde';
 import Loader from './../components/Loader';
-
+import { baseUrl ,botID } from './../confits';
 
 function AppointForm({geopl,chatBotUtils_1,next_question,sheet_id,visitorId,}) {
 
@@ -76,7 +76,7 @@ setChatbotid(CHATBOTID)
       try {
         const data = await axios({
           method: 'POST',
-          url: 'https://www.smatbot.com/kya_backend/pagehub/chatbot_utils',
+          url: `${baseUrl}/kya_backend/pagehub/chatbot_utils`,
           data: formData_detail_data,
           headers: { 'Content-Type': 'multipart/form-data' },
         });
@@ -110,7 +110,7 @@ setChatbotid(CHATBOTID)
       try {
         const res = await axios({
           method: 'POST',
-          url: 'https://www.smatbot.com/kya_backend/pagehub/chatbot_utils',
+          url: `${baseUrl}/kya_backend/pagehub/chatbot_utils`,
           data: send_alert_data,
           headers: { 'Content-Type': 'multipart/form-data' },
         });
@@ -176,7 +176,7 @@ setChatbotid(CHATBOTID)
 
   /* ------------------------------RESHUDLE THE DEMO AND GETTING FORM DAEAILTS AND CALENDER DEFAULT OpTIONS------------------------------------- */
   const reshudle_detail_data = new FormData();
-  reshudle_detail_data.append('bot_id', chatbotid?.length>0 ? chatbotid : 12763);
+  reshudle_detail_data.append('bot_id', chatbotid?.length>0 ? chatbotid : botID);
   reshudle_detail_data.append('session_id', sectionID);
 
   
@@ -185,7 +185,7 @@ setChatbotid(CHATBOTID)
       try {
         const data = await axios({
           method: 'POST',
-          url: 'https://www.smatbot.com/kya_backend/singleChatEmailView/singleChatView',
+          url: `${baseUrl}/kya_backend/singleChatEmailView/singleChatView`,
           data: reshudle_detail_data,
           headers: { 'Content-Type': 'multipart/form-data' },
         });
@@ -273,7 +273,7 @@ let filterInstaAndWhatsAppmobile = filterMobile[0]?.answer_text ? filterMobile[0
             <span className='m-l-5'>Powered by</span>
             {/* <img src="" alt="" className="m-l-5" /> */}
             <a
-              href='https://www.smatbot.com'
+              href={`${baseUrl}`}
               target='_blank'
               className='f-s-10 f-s-14 f-w-600 text-light-black'
             >

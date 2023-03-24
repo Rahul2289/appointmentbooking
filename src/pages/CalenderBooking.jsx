@@ -21,15 +21,15 @@ import { useAppContext } from '../context/context';
 import { ColorRing, Watch } from 'react-loader-spinner';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-
 import { ToastContainer, toast } from 'react-toastify';
+import { baseUrl ,botID } from './../confits';
 const CalenderBooking = () => {
   const [checked, setChecked] = useState(true);
   const [timeing, setTimeing] = useState('00:00 PM');
   const [timer_loader, setTimer_loader] = useState(false);
   const navigate = useNavigate();
   const {
-    Cal_Data, cb_section, next_ques, Time_slots, setTime_slots, loading, setLoading, value, onChange, boooked_date, setBooked_date,
+    number, Cal_Data, cb_section, next_ques, Time_slots, setTime_slots, loading, setLoading, value, onChange, boooked_date, setBooked_date,
     standardTimeing,setStandardTimeing,   disable,   setdisable,  sectionID,  setSectionID,  mobile,  userData,  resheaduleDate
   } = useAppContext();
 
@@ -159,8 +159,8 @@ const CalenderBooking = () => {
       try {
         setTimer_loader(true);
         const res = await axios.get(
-          `https://www.smatbot.com/kya_backend/pagehub/getSlots?chatbot_id=${
-            next_ques?.chatbot_id ? next_ques?.chatbot_id :  12763
+          `${baseUrl}/kya_backend/pagehub/getSlots?chatbot_id=${
+            next_ques?.chatbot_id ? next_ques?.chatbot_id :  botID
           }&question_id=${next_ques?.id ? next_ques?.id : 580881}&cb_session=${
             cb_section.cb_session ?  cb_section.cb_session : sectionID
           }&starttime=${encodeURIComponent(
@@ -201,7 +201,7 @@ const CalenderBooking = () => {
       try {
         setTimer_loader(true);
         const res = await axios.get(
-          `https://www.smatbot.com/kya_backend/pagehub/getSlots?chatbot_id=${next_ques?.chatbot_id ? next_ques?.chatbot_id :  12763}&question_id=${next_ques?.id ? next_ques?.id : 580881}&cb_session=${
+          `${baseUrl}/kya_backend/pagehub/getSlots?chatbot_id=${next_ques?.chatbot_id ? next_ques?.chatbot_id :  botID}&question_id=${next_ques?.id ? next_ques?.id : 580881}&cb_session=${
           cb_section.cb_session ?  cb_section.cb_session : sectionID
         }&starttime=${encodeURIComponent(
             Start_time_values
@@ -289,7 +289,7 @@ const CalenderBooking = () => {
     try {
       const res = await axios({
         method: 'POST',
-        url: 'https://www.smatbot.com/kya_backend/pagehub/chatbot_utils',
+        url: `${baseUrl}/kya_backend/pagehub/chatbot_utils`,
         data: Conform_booked_Data,
         headers: { 'Content-Type': 'multipart/form-data' },
       });
@@ -319,7 +319,7 @@ const postToGoogleSheet =async()=>{
 
   /* ------------------------------ Booking the appointment Conformed------------------------------------- */
   const booked_Data = new FormData();
-  booked_Data.append('chatbot_id', next_ques?.chatbot_id ? next_ques?.chatbot_id :  12763);
+  booked_Data.append('chatbot_id', next_ques?.chatbot_id ? next_ques?.chatbot_id :  botID);
   booked_Data.append('cb_session', cb_section.cb_session ?  cb_section.cb_session : sectionID);
   booked_Data.append('question_id', next_ques?.id && next_ques?.id);
   booked_Data.append('time', Booked_date);
@@ -348,7 +348,7 @@ const postToGoogleSheet =async()=>{
         });
         const res = await axios({
           method: 'POST',
-          url: 'https://www.smatbot.com/kya_backend/pagehub/createAppointment',
+          url: `${baseUrl}/kya_backend/pagehub/createAppointment`,
           data: booked_Data,
           headers: { 'Content-Type': 'multipart/form-data' },
         });
@@ -368,7 +368,8 @@ const postToGoogleSheet =async()=>{
                 }, 500);
               }else{
                 setTimeout(() => {
-                  window.open('../../thankYou.html', '_self');
+                 //  window.open('../../thankYou.html', '_self');
+                  window.open(`${baseUrl}/thankyou?name=${userData.name}&email=${userData.email}&mobile=${number?.dialCode} ${mobile}&company_url=${userData.companyUrl}&booked_date=${current_Day}, ${current_month} ${current_Date}, ${timeing} |  ${standardTimeing && standardTimeing}`, '_self');
                   setLoading(false);
                  }, 500);
               }
@@ -445,7 +446,7 @@ const handleOnchangeStandardTimeing =(e)=>{
             <span className='m-l-5'>Powered by</span>
             {/* <img src="" alt="" className="m-l-5" /> */}
             <a
-              href='https://www.smatbot.com'
+              href={`${baseUrl} `}
               target='_blank'
               className='f-s-10 f-s-14 f-w-600 text-light-black'
             >
